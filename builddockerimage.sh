@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 parent_dir=${1}
- ${parent_dir}/bashtowriteDockerfile.sh
+${parent_dir}/bashtowriteDockerfile.sh  ${parent_dir}
 command=""
 for x in ${parent_dir}/*.json ;
 do 
