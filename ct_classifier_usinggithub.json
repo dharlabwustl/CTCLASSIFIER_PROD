@@ -6,7 +6,7 @@
   "image": "sharmaatul11/dicom2nifti_nwu_1:latest",
   "type": "docker",
   "working-directory": "/callfromgithub",
-  "command-line": " /callfromgithub/downloadcodefromgithub.sh #SESSION_ID# $XNAT_USER $XNAT_PASS https://github.com/dharlabwustl/CTCLASSIFIER_PROD.git 2 /input /output ",
+  "command-line": " /callfromgithub/downloadcodefromgithub.sh #SESSION_ID# $XNAT_USER $XNAT_PASS https://snipr.wustl.edu https://github.com/dharlabwustl/CTCLASSIFIER_PROD.git 2 /input /output ",
   "override-entrypoint": true,
   "mounts": [
     {
