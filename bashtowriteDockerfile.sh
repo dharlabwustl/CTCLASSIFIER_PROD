@@ -5,7 +5,7 @@ echo 'RUN sed -i -e s/deb.debian.org/archive.debian.org/g \' >> ${parent_dir}/Do
 echo            '-e s|security.debian.org|archive.debian.org/|g \' >> ${parent_dir}/Dockerfile
 echo         '-e /stretch-updates/d /etc/apt/sources.list' >> ${parent_dir}/Dockerfile
 #directory_of_software="/donotuse"
-#echo 'RUN apt update' >> ${parent_dir}/Dockerfile
+echo 'RUN apt update' >> ${parent_dir}/Dockerfile
 #echo 'RUN mv /run /donotuse' >> ${parent_dir}/Dockerfile
 #echo 'RUN rm  /donotuse/Classifier_wholeSession.py' >> ${parent_dir}/Dockerfile
 #echo 'RUN rm  /donotuse/label_probability.py' >> ${parent_dir}/Dockerfile
