@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import os, sys, errno, shutil, uuid
+import os, sys, errno, shutil, uuid,json
 import math
 import glob
 import re
@@ -27,7 +27,7 @@ def get_metadata_session(sessionId):
     xnatSession.close_httpsession()
     metadata_session=response.json()['ResultSet']['Result']
     return metadata_session
-def get_metadata_session_saveascsv(sessionId):
+def get_metadata_session_saveascsv(sessionId,filename):
     url = ("/data/experiments/%s/scans/?format=json" %    (sessionId))
     xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
     xnatSession.renew_httpsession()
@@ -35,6 +35,7 @@ def get_metadata_session_saveascsv(sessionId):
     xnatSession.close_httpsession()
     metadata_session=response.json()['ResultSet']['Result']
     df_scan = pd.read_json(json.dumps(metadata_session))
+    df_scan.to_csv(filename,index=False)
     return metadata_session
 
 def get_dicom_from_filesystem(sessionId, scanId,xnatSession):
