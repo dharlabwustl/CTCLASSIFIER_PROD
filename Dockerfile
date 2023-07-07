@@ -1,5 +1,8 @@
 FROM hossein15051/stroke_edema:scan_selection_v1_20201005
-RUN sed -i -e s/deb.debian.org/archive.debian.org/g  -e s|security.debian.org|archive.debian.org/|g -e /stretch-updates/d /etc/apt/sources.list
+RUN sed -i -e 's/deb.debian.org/archive.debian.org/g' \
+           -e 's|security.debian.org|archive.debian.org/|g' \
+           -e '/stretch-updates/d' /etc/apt/sources.list
+RUN apt-get update
 RUN mkdir -p /callfromgithub
 RUN chmod 755 /callfromgithub
 COPY downloadcodefromgithub.sh /callfromgithub/
