@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 parent_dir=${1}
 echo 'FROM hossein15051/stroke_edema:scan_selection_v1_20201005' > ${parent_dir}/Dockerfile
-echo 'RUN sed -i -e s/deb.debian.org/archive.debian.org/g  -e s|security.debian.org|archive.debian.org/|g -e /stretch-updates/d /etc/apt/sources.list'
+echo 'RUN sed -i -e s/deb.debian.org/archive.debian.org/g  -e s|security.debian.org|archive.debian.org/|g -e /stretch-updates/d /etc/apt/sources.list'  >> ${parent_dir}/Dockerfile
 
 #directory_of_software="/donotuse"
 #echo 'RUN apt update' >> ${parent_dir}/Dockerfile
