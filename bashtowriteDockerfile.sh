@@ -27,7 +27,7 @@ for x in ${ubuntupackagestoinstall[@]} ; do
 fi 
 done
 
-pipinstall=(PyGithub)
+pipinstall=(PyGithub pandas)
 len_array=${#pipinstall[@]}
 last_num=$((pipinstall -1))
 echo "RUN pip install \\" >> ${parent_dir}/Dockerfile

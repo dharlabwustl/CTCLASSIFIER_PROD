@@ -4,7 +4,7 @@
 # docker build -t sharmaatul11/dicom2nifti_nwu_1 .
 dockerimagename=hosseinclassifier1_prod
 ./builddockerimage.sh  ${dockerimagename}
-# directorytocreate=(output ZIPFILEDIR NIFTIFILEDIR DICOMFILEDIR working input ) 
+ directorytocreate=(output ZIPFILEDIR NIFTIFILEDIR DICOMFILEDIR working input )
 #mkdir working
 #mkdir input
 #mkdir ZIPFILEDIR

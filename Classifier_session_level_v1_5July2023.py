@@ -4,6 +4,7 @@ import os, sys, errno, shutil, uuid
 import math
 import glob
 import re
+import pandas as pd
 import requests
 import pydicom as dicom
 import subprocess
@@ -25,6 +26,15 @@ def get_metadata_session(sessionId):
     response = xnatSession.httpsess.get(xnatSession.host + url)
     xnatSession.close_httpsession()
     metadata_session=response.json()['ResultSet']['Result']
+    return metadata_session
+def get_metadata_session_saveascsv(sessionId):
+    url = ("/data/experiments/%s/scans/?format=json" %    (sessionId))
+    xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
+    xnatSession.renew_httpsession()
+    response = xnatSession.httpsess.get(xnatSession.host + url)
+    xnatSession.close_httpsession()
+    metadata_session=response.json()['ResultSet']['Result']
+    df_scan = pd.read_json(json.dumps(metadata_session))
     return metadata_session
 
 def get_dicom_from_filesystem(sessionId, scanId,xnatSession):
@@ -110,6 +120,35 @@ def get_dicom_using_xnat(sessionId, scanId,xnatSession):
     selDicom=os.path.join(sessionDir,os.path.basename(selDicomAbs))
     print(selDicom) 
     return selDicom, nDicomFiles
+
+def run_classifier_7July_2023(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession):
+    # def run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSesDir, xnatSession):
+    print("Classifying scan %s" % scanId)
+    # Select DICOM file for scanId (70% thru the brain)
+    selDicom, nDicomFiles = get_dicom_using_xnat(sessionId, scanId,xnatSession) #, sessionDir, xnatSesDir, xnatSession)
+    # selDicom, nDicomFiles = get_dicom_from_filesystem(sessionId, scanId,xnatSession)
+    print(selDicom)
+    print(nDicomFiles)
+    ####################################################################
+    selDicomDecompr = os.path.join(rawDir, os.path.basename(selDicom))
+    DecompressDCM.decompress(selDicom, selDicomDecompr)
+    # Classify it
+    label = label_probability.classify(selDicomDecompr, jpgDir, scanId, nDicomFiles)
+    print("Scan classification for %s scan %s is '%s'" % (sessionId, scanId, label))
+    # Change value of series_class in XNAT
+    # url = ("/data/experiments/%s/scans/%s?xsiType=xnat:mrScanData&xnat:imageScanData/series_class=%s" %
+    #     (sessionId, scanId, label))
+    url = ("/data/experiments/%s/scans/%s?xsiType=xnat:ctScanData&type=%s" % (sessionId, scanId, label))
+    # xnatSession.renew_httpsession()
+    response = xnatSession.httpsess.put(xnatSession.host + url)
+    if response.status_code == 200 or response.status_code == 201:
+        print("Successfully set series_class for %s scan %s to '%s'" % (sessionId, scanId, label))
+    else:
+        errStr = "ERROR"
+        if response.status_code == 403 or response.status_code == 404:
+            errStr = "PERMISSION DENIED"
+        raise Exception("%s attempting to set series_class for %s %s to '%s': %s" %
+                        (errStr, sessionId, scanId, label, response.text))
 
 
 def run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession):
