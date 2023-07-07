@@ -11,7 +11,7 @@ echo 'RUN mkdir -p /callfromgithub' >> ${parent_dir}/Dockerfile
 echo 'RUN chmod 755 /callfromgithub' >> ${parent_dir}/Dockerfile
 echo 'COPY downloadcodefromgithub.sh /callfromgithub/' >> ${parent_dir}/Dockerfile
 echo 'RUN chmod +x /callfromgithub/downloadcodefromgithub.sh' >> ${parent_dir}/Dockerfile
-
+echo 'RUN apt -y update'
 #echo 'WORKDIR /donotuse' >> ${parent_dir}/Dockerfile
 ubuntupackagestoinstall=(vim zip unzip curl tree)
 echo ${ubuntupackagestoinstall[0]}
