@@ -135,6 +135,7 @@ def get_dicom_using_xnat(sessionId, scanId,xnatSession):
     print(selDicom) 
     return selDicom, nDicomFiles
 
+
 def run_classifier_7July_2023(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession):
     # def run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSesDir, xnatSession):
     print("Classifying scan %s" % scanId)
@@ -269,8 +270,10 @@ def main():
     args = parser.parse_args()
     name_of_the_function=args.stuff[0]
     return_value=0
-    if name_of_the_function == "call_classifier_v1":
+    if name_of_the_function == "call_classifier_v1":  #call_get_metadata_session_saveascsv
         return_value=call_classifier_v1(args)
+    if name_of_the_function == "call_get_metadata_session_saveascsv":  #
+        return_value=call_get_metadata_session_saveascsv(args)
     return  return_value
 
 

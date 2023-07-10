@@ -19,6 +19,7 @@ sessionId=$1 #SNIPR_E03539 #SNIPR_E03526
 # cd /run/
 # echo $PWD
 #python /software1/Classifier_session_level.py /input /working ${sessionId}  #${scanID}
-
-call_classifier_v1_arguments=('call_classifier_v1' /input /working ${sessionId})
-outputfiles_present=$(python /software1/Classifier_session_level_v1_5July2023.py  "${call_classifier_v1_arguments[@]}")
+output_directory=/output/
+filename=${output_directory}/${sessionId}.csv
+call_get_metadata_session_saveascsv_arguments=('call_get_metadata_session_saveascsv' ${sessionId} ${filename})
+outputfiles_present=$(python /software1/Classifier_session_level_v1_5July2023.py  "${call_get_metadata_session_saveascsv_arguments[@]}")
