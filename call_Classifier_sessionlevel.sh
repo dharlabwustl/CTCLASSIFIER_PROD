@@ -34,4 +34,5 @@ do
     echo sleep_second_counter::${sleep_second_counter}
     break
   fi
+  echo sleep_second_counter::${sleep_second_counter}
 done
