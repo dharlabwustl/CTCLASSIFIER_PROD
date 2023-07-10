@@ -199,12 +199,12 @@ def call_classifier_v1(args):
         sessionDir = args.stuff[1]
         workingDir = args.stuff[2]
         sessionId = args.stuff[3]
-        command = "echo  success at : " +  inspect.stack()[0][3]  + " >> " + "/workingoutput/error.txt"
+        command = "echo  success at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
         subprocess.call(command,shell=True)
         print("I SUCCEEDED AT ::{}".format(inspect.stack()[0][3]))
         classifier_v1(sessionDir,workingDir,sessionId)
     except Exception:
-        command = "echo  FAILURE at : " +  inspect.stack()[0][3]  + " >> " + "/workingoutput/error.txt"
+        command = "echo  FAILURE at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
         subprocess.call(command,shell=True)
         command = "echo  ERROR : " +  Exception  + " >> " + "/workingoutput/error.txt"
         subprocess.call(command,shell=True)
