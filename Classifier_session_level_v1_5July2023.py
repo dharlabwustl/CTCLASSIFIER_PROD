@@ -236,24 +236,24 @@ def run_classifier_7July_2023(sessionDir, rawDir, jpgDir, sessionId, scanId, xna
         print("Classifying scan %s" % scanId)
         # Select DICOM file for scanId (70% thru the brain)
         selDicom, nDicomFiles = get_dicom_using_xnat_10_July_2023(sessionId, scanId,xnatSession,sessionDir='/DICOMFILEDIR')
-        # print(selDicom)
-        # print(nDicomFiles)
-        # ####################################################################
-        # selDicomDecompr = os.path.join(rawDir, os.path.basename(selDicom))
-        # DecompressDCM.decompress(selDicom, selDicomDecompr)
-        # label = label_probability.classify(selDicomDecompr, jpgDir, scanId, nDicomFiles)
-        # print("Scan classification for %s scan %s is '%s'" % (sessionId, scanId, label))
-        # url = ("/data/experiments/%s/scans/%s?xsiType=xnat:ctScanData&type=%s" % (sessionId, scanId, label))
-        # # xnatSession.renew_httpsession()
-        # response = xnatSession.httpsess.put(xnatSession.host + url)
-        # if response.status_code == 200 or response.status_code == 201:
-        #     print("Successfully set series_class for %s scan %s to '%s'" % (sessionId, scanId, label))
-        # else:
-        #     errStr = "ERROR"
-        #     if response.status_code == 403 or response.status_code == 404:
-        #         errStr = "PERMISSION DENIED"
-        #     raise Exception("%s attempting to set series_class for %s %s to '%s': %s" %
-        #                     (errStr, sessionId, scanId, label, response.text))
+        print(selDicom)
+        print(nDicomFiles)
+        ####################################################################
+        selDicomDecompr = os.path.join(rawDir, os.path.basename(selDicom))
+        DecompressDCM.decompress(selDicom, selDicomDecompr)
+        label = label_probability.classify(selDicomDecompr, jpgDir, scanId, nDicomFiles)
+        print("Scan classification for %s scan %s is '%s'" % (sessionId, scanId, label))
+        url = ("/data/experiments/%s/scans/%s?xsiType=xnat:ctScanData&type=%s" % (sessionId, scanId, label))
+        # xnatSession.renew_httpsession()
+        response = xnatSession.httpsess.put(xnatSession.host + url)
+        if response.status_code == 200 or response.status_code == 201:
+            print("Successfully set series_class for %s scan %s to '%s'" % (sessionId, scanId, label))
+        else:
+            errStr = "ERROR"
+            if response.status_code == 403 or response.status_code == 404:
+                errStr = "PERMISSION DENIED"
+            raise Exception("%s attempting to set series_class for %s %s to '%s': %s" %
+                            (errStr, sessionId, scanId, label, response.text))
         command = "echo  success at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
         subprocess.call(command,shell=True)
         print("I SUCCEEDED AT ::{}".format(inspect.stack()[0][3]))
