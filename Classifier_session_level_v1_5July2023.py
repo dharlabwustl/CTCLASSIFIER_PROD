@@ -216,6 +216,16 @@ def call_download_a_singlefile_with_URIString(args):
     download_a_singlefile_with_URIString(url,filename,dir_to_save)
     return
 
+def sort_dicom_list(DICOM_LIST_CSV):
+    DICOM_METADATA_DF=pd.read_csv(DICOM_LIST_CSV)
+    DICOM_METADATA_DF["SLICE_NUM"]=DICOM_METADATA_DF["Name"].str.split("-").str[-2]
+    DICOM_METADATA_DF.SLICE_NUM = DICOM_METADATA_DF.SLICE_NUM.astype(float)
+    DICOM_METADATA_DF=DICOM_METADATA_DF.sort_values("SLICE_NUM")
+    # DICOM_LIST_CSV_NEW=DICOM_LIST_CSV.split('.csv')[0]+"SORTED.csv"
+    DICOM_METADATA_DF.to_csv(DICOM_LIST_CSV,index=False)
+def call_sort_dicom_list(args):
+    DICOM_LIST_CSV=args.stuff[1]
+    sort_dicom_list(DICOM_LIST_CSV)
 def download_a_singlefile_with_URIString(url,filename,dir_to_save):
     print("url::{}::filename::{}::dir_to_save::{}".format(url,filename,dir_to_save))
     xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
@@ -343,6 +353,8 @@ def main():
         return_value=call_get_resourcefiles_metadata_saveascsv_args(args)
     if name_of_the_function == "call_download_a_singlefile_with_URIString":  #
         return_value=call_download_a_singlefile_with_URIString(args)
+    if name_of_the_function == "call_sort_dicom_list":  #
+        return_value=call_sort_dicom_list(args)
     return  return_value
 
 
