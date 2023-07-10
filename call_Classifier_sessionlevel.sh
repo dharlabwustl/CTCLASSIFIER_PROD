@@ -42,6 +42,9 @@ echo outputfiles_present::${outputfiles_present} >>/output/error.txt
 while IFS=',' read -ra array; do
   URI=${array[6]}
   echo "URI":${URI}
+  resource_dir="DICOM"
+  output_csvfile=${output_directory}/${sessionId}_${array[4]}.csv
+  echo "output_csvfile":${output_csvfile}
 
 #        URI=sys.argv[1]
 #        # print("URI::{}".format(URI))
