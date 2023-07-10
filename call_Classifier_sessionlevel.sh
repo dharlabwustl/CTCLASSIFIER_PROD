@@ -43,16 +43,10 @@ while IFS=',' read -ra array; do
   URI=${array[6]}
   echo "URI":${URI}
   resource_dir="DICOM"
-  output_csvfile=${output_directory}/${sessionId}_${array[4]}.csv
+  output_csvfile=${sessionId}_${array[4]}.csv
   echo "output_csvfile":${output_csvfile}
-
-#        URI=sys.argv[1]
-#        # print("URI::{}".format(URI))
-#        URI=URI.split('/resources')[0]
-#        # print("URI::{}".format(URI))
-#        resource_dir=sys.argv[2]
-#        dir_to_receive_the_data=sys.argv[3]
-#        output_csvfile=sys.argv[4]
-  call_get_resourcefiles_metadata_saveascsv_arguments=('call_get_resourcefiles_metadata_saveascsv' ${sessionId} ${filename})
-#  outputfiles_present=$(python /software1/Classifier_session_level_v1_5July2023.py "${call_get_resourcefiles_metadata_saveascsv_arguments[@]}")
+  dir_to_receive_the_data=${output_directory}
+  call_get_resourcefiles_metadata_saveascsv_arguments=('call_get_resourcefiles_metadata_saveascsv' ${URI} ${resource_dir} ${dir_to_receive_the_data} ${output_csvfile} )
+  outputfiles_present=$(python /software1/Classifier_session_level_v1_5July2023.py "${call_get_resourcefiles_metadata_saveascsv_arguments[@]}")
+  wait_for_file ${dir_to_receive_the_data}/${output_csvfile}
 done < <(tail -n +2 "${filename}")
