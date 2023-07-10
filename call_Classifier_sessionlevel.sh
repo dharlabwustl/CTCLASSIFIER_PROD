@@ -50,9 +50,10 @@ while IFS=',' read -ra array; do
   outputfiles_present=$(python /software1/Classifier_session_level_v1_5July2023.py "${call_get_resourcefiles_metadata_saveascsv_args_arguments[@]}")
   wait_for_file ${dir_to_receive_the_data}/${output_csvfile}
   SCAN_ID=${array[4]}
-  call_sort_dicom_list_arguments=('call_sort_dicom_list' ${dir_to_receive_the_data}/${output_csvfile})
-  outputfiles_present=$(python /software1/Classifier_session_level_v1_5July2023.py "${call_sort_dicom_list_arguments[@]}")
+
   if [ ${SCAN_ID} == "2" ]; then
+    call_sort_dicom_list_arguments=('call_sort_dicom_list' ${dir_to_receive_the_data}/${output_csvfile})
+    outputfiles_present=$(python /software1/Classifier_session_level_v1_5July2023.py "${call_sort_dicom_list_arguments[@]}")
     echo "SCAN_ID::${SCAN_ID}"
     while IFS=',' read -ra array1; do
       url=${array1[6]}
