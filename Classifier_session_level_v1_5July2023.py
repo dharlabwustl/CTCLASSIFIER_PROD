@@ -275,46 +275,46 @@ def main():
 
 
 if __name__ == '__main__':
-    
-    sessionDir = sys.argv[1]
-    workingDir = sys.argv[2]
-    sessionId = sys.argv[3]
-    ##############################################
-    metadata_session=get_metadata_session(sessionId)
-    for x in metadata_session:
-        # if int(x['ID']) == scanId:
-        scanId=x['ID']
-
-
-        try:
-
-            ###########################################################
-            # xnatSesDir = sys.argv[4]
-            # scans = [sys.argv[4]] #sys.argv[5].split()
-            # scanId=scans[0]
-            # Make working dirs
-            rawDir = os.path.join(workingDir, 'RAW')
-            os.makedirs(rawDir, exist_ok = True)
-            jpgDir = os.path.join(workingDir, 'JPG' )
-            os.makedirs(jpgDir, exist_ok = True)
-            command="rm -r  " + rawDir + "/*"
-            subprocess.call(command,shell=True)
-            command="rm -r  " + jpgDir + "/*"
-            subprocess.call(command,shell=True)
-            command="rm -r /NIFTIFILEDIR/*"
-            subprocess.call(command,shell=True)
-            # for x in range(1,5):
-            #     print(sys.argv[x])
-            command="rm -r /ZIPFILEDIR/*"
-            subprocess.call(command,shell=True)
-            command="rm -r /DICOMFILEDIR/*"
-            subprocess.call(command,shell=True)
-            # for x in range(10):
-            #     print("{}:XNAT_HOST".format(XNAT_HOST))
-            xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
-            run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession)
-            # Handle DICOM files that are not stored in a directory matching their XNAT scanId
-            xnatSession.close_httpsession()
-        except Exception as e: # work on python 3.x
-            print('Exception occured: '+ str(e))
-            continue 
+    main()
+    # sessionDir = sys.argv[1]
+    # workingDir = sys.argv[2]
+    # sessionId = sys.argv[3]
+    # ##############################################
+    # metadata_session=get_metadata_session(sessionId)
+    # for x in metadata_session:
+    #     # if int(x['ID']) == scanId:
+    #     scanId=x['ID']
+    #
+    #
+    #     try:
+    #
+    #         ###########################################################
+    #         # xnatSesDir = sys.argv[4]
+    #         # scans = [sys.argv[4]] #sys.argv[5].split()
+    #         # scanId=scans[0]
+    #         # Make working dirs
+    #         rawDir = os.path.join(workingDir, 'RAW')
+    #         os.makedirs(rawDir, exist_ok = True)
+    #         jpgDir = os.path.join(workingDir, 'JPG' )
+    #         os.makedirs(jpgDir, exist_ok = True)
+    #         command="rm -r  " + rawDir + "/*"
+    #         subprocess.call(command,shell=True)
+    #         command="rm -r  " + jpgDir + "/*"
+    #         subprocess.call(command,shell=True)
+    #         command="rm -r /NIFTIFILEDIR/*"
+    #         subprocess.call(command,shell=True)
+    #         # for x in range(1,5):
+    #         #     print(sys.argv[x])
+    #         command="rm -r /ZIPFILEDIR/*"
+    #         subprocess.call(command,shell=True)
+    #         command="rm -r /DICOMFILEDIR/*"
+    #         subprocess.call(command,shell=True)
+    #         # for x in range(10):
+    #         #     print("{}:XNAT_HOST".format(XNAT_HOST))
+    #         xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
+    #         run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession)
+    #         # Handle DICOM files that are not stored in a directory matching their XNAT scanId
+    #         xnatSession.close_httpsession()
+    #     except Exception as e: # work on python 3.x
+    #         print('Exception occured: '+ str(e))
+    #         continue
