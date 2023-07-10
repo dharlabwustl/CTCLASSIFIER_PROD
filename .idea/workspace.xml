@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3ad48966-0400-4eb0-b5b5-733bf7ded71f" name="Changes" comment="Commit 2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classifier_session_level_v1_5July2023.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classifier_session_level_v1_5July2023.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/call_Classifier_sessionlevel.sh" beforeDir="false" afterPath="$PROJECT_DIR$/call_Classifier_sessionlevel.sh" afterDir="false" />
     </list>
@@ -313,7 +312,23 @@
       <option name="project" value="LOCAL" />
       <updated>1689011899718</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="Commit 2">
+      <option name="closed" value="true" />
+      <created>1689012426727</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1689012426727</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Commit 2">
+      <option name="closed" value="true" />
+      <created>1689012503139</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1689012503139</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
