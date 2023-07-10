@@ -134,7 +134,35 @@ def get_dicom_using_xnat(sessionId, scanId,xnatSession):
     selDicom=os.path.join(sessionDir,os.path.basename(selDicomAbs))
     print(selDicom) 
     return selDicom, nDicomFiles
+def call_get_resourcefiles_metadata_saveascsv():
+    try:
+        URI=sys.argv[1]
+        # print("URI::{}".format(URI))
+        URI=URI.split('/resources')[0]
+        # print("URI::{}".format(URI))
+        resource_dir=sys.argv[2]
+        dir_to_receive_the_data=sys.argv[3]
+        output_csvfile=sys.argv[4]
+        get_resourcefiles_metadata_saveascsv(URI,resource_dir,dir_to_receive_the_data,output_csvfile)
+        print("I SUCCEED AT ::{}".format(inspect.stack()[0][3]))
+        return 1
+    except:
+        print("I FAILED AT ::{}".format(inspect.stack()[0][3]))
+        pass
+    return 0
+def get_resourcefiles_metadata_saveascsv(URI,resource_dir,dir_to_receive_the_data,output_csvfile):
 
+    url = (URI+'/resources/' + resource_dir +'/files?format=json')
+    # print("url::{}".format(url))
+    xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
+    xnatSession.renew_httpsession()
+    response = xnatSession.httpsess.get(xnatSession.host + url)
+    xnatSession.close_httpsession()
+    metadata_masks=response.json()['ResultSet']['Result']
+    # print("metadata_masks::{}".format(metadata_masks))
+    df_scan = pd.read_json(json.dumps(metadata_masks))
+    pd.DataFrame(df_scan).to_csv(os.path.join(dir_to_receive_the_data,output_csvfile),index=False)
+    # return metadata_masks
 
 def run_classifier_7July_2023(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession):
     # def run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSesDir, xnatSession):
@@ -274,6 +302,8 @@ def main():
         return_value=call_classifier_v1(args)
     if name_of_the_function == "call_get_metadata_session_saveascsv":  #
         return_value=call_get_metadata_session_saveascsv(args)
+    if name_of_the_function == "call_get_resourcefiles_metadata_saveascsv":  #
+        return_value=call_get_resourcefiles_metadata_saveascsv(args)
     return  return_value
 
 
