@@ -46,7 +46,7 @@ while IFS=',' read -ra array; do
   output_csvfile=${sessionId}_${array[4]}.csv
   echo "output_csvfile":${output_csvfile}
   dir_to_receive_the_data=${output_directory}
-  call_get_resourcefiles_metadata_saveascsv_arguments=('call_get_resourcefiles_metadata_saveascsv' ${URI} ${resource_dir} ${dir_to_receive_the_data} ${output_csvfile} )
-  outputfiles_present=$(python /software1/Classifier_session_level_v1_5July2023.py "${call_get_resourcefiles_metadata_saveascsv_arguments[@]}")
+  call_get_resourcefiles_metadata_saveascsv_args_arguments=('call_get_resourcefiles_metadata_saveascsv_args' ${URI} ${resource_dir} ${dir_to_receive_the_data} ${output_csvfile} )
+  outputfiles_present=$(python /software1/Classifier_session_level_v1_5July2023.py "${call_get_resourcefiles_metadata_saveascsv_args_arguments[@]}")
   wait_for_file ${dir_to_receive_the_data}/${output_csvfile}
 done < <(tail -n +2 "${filename}")

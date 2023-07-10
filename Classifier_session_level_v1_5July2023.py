@@ -91,6 +91,7 @@ def get_dicom_from_filesystem(sessionId, scanId,xnatSession):
             pass
     raise Exception("No DICOM files found for %s" % scanId)
 
+
 def get_dicom_using_xnat(sessionId, scanId,xnatSession):
     # xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
     url = ("/data/experiments/%s/scans/%s/files?format=json&locator=absolutePath&file_format=DICOM" % 
@@ -143,6 +144,22 @@ def call_get_resourcefiles_metadata_saveascsv():
         resource_dir=sys.argv[2]
         dir_to_receive_the_data=sys.argv[3]
         output_csvfile=sys.argv[4]
+        get_resourcefiles_metadata_saveascsv(URI,resource_dir,dir_to_receive_the_data,output_csvfile)
+        print("I SUCCEED AT ::{}".format(inspect.stack()[0][3]))
+        return 1
+    except:
+        print("I FAILED AT ::{}".format(inspect.stack()[0][3]))
+        pass
+    return 0
+def call_get_resourcefiles_metadata_saveascsv_args(args):
+    try:
+        URI=args.stuff[1] #sys.argv[1]
+        # print("URI::{}".format(URI))
+        URI=URI.split('/resources')[0]
+        # print("URI::{}".format(URI))
+        resource_dir=args.stuff[2] #sys.argv[2]
+        dir_to_receive_the_data=args.stuff[3] #sys.argv[3]
+        output_csvfile=args.stuff[4] #sys.argv[4]
         get_resourcefiles_metadata_saveascsv(URI,resource_dir,dir_to_receive_the_data,output_csvfile)
         print("I SUCCEED AT ::{}".format(inspect.stack()[0][3]))
         return 1
@@ -302,8 +319,8 @@ def main():
         return_value=call_classifier_v1(args)
     if name_of_the_function == "call_get_metadata_session_saveascsv":  #
         return_value=call_get_metadata_session_saveascsv(args)
-    if name_of_the_function == "call_get_resourcefiles_metadata_saveascsv":  #
-        return_value=call_get_resourcefiles_metadata_saveascsv(args)
+    if name_of_the_function == "call_get_resourcefiles_metadata_saveascsv_args":  #
+        return_value=call_get_resourcefiles_metadata_saveascsv_args(args)
     return  return_value
 
 
