@@ -167,7 +167,7 @@ def get_dicom_using_xnat_10_July_2023(sessionId, scanId,xnatSession,sessionDir='
             command = "echo  failed at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
             subprocess.call(command,shell=True)
             # return selDicom,
-        # df_scan=sort_dicom_list_DF(df_scan)
+        df_scan=sort_dicom_list_DF(df_scan)
         # #     # Get 70% file and ensure it exists
         # selDicomAbs =df_scan.at[get_slice_idx(nDicomFiles),"URI"]   # result[get_slice_idx(nDicomFiles)]['absolutePath']
         # print(selDicomAbs)
