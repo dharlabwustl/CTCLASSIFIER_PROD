@@ -232,7 +232,7 @@ def run_classifier_7July_2023(sessionDir, rawDir, jpgDir, sessionId, scanId, xna
     try:
         print("Classifying scan %s" % scanId)
         # Select DICOM file for scanId (70% thru the brain)
-        # selDicom, nDicomFiles = get_dicom_using_xnat_10_July_2023(sessionId, scanId,xnatSession,sessionDir='/DICOMFILEDIR')
+        selDicom, nDicomFiles = get_dicom_using_xnat_10_July_2023(sessionId, scanId,xnatSession,sessionDir='/DICOMFILEDIR')
         # print(selDicom)
         # print(nDicomFiles)
         # ####################################################################
