@@ -172,10 +172,10 @@ def get_dicom_using_xnat_10_July_2023(sessionId, scanId,xnatSession,sessionDir='
         df_scan.to_csv("/input/temp.csv")
         # #     # Get 70% file and ensure it exists
         selDicomAbs =df_scan.iloc[int(get_slice_idx(nDicomFiles)),"absolutePath"]   # result[get_slice_idx(nDicomFiles)]['absolutePath']
-        print(selDicomAbs)
-        download_a_singlefile_with_URIString(selDicomAbs,os.path.basename(selDicomAbs),sessionDir)
-        selDicom=os.path.join(sessionDir,os.path.basename(selDicomAbs))
-        wait_for_file_tobe_written(selDicom,10)
+        # print(selDicomAbs)
+        # download_a_singlefile_with_URIString(selDicomAbs,os.path.basename(selDicomAbs),sessionDir)
+        # selDicom=os.path.join(sessionDir,os.path.basename(selDicomAbs))
+        # wait_for_file_tobe_written(selDicom,10)
         command = "echo  success at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
         subprocess.call(command,shell=True)
         print("I SUCCEEDED AT ::{}".format(inspect.stack()[0][3]))
