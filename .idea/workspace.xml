@@ -8,6 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Classifier_session_level_v1_5July2023.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classifier_session_level_v1_5July2023.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/call_Classifier_sessionlevel.sh" beforeDir="false" afterPath="$PROJECT_DIR$/call_Classifier_sessionlevel.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,14 +112,6 @@
       <option name="presentableId" value="LOCAL-00010" />
       <option name="project" value="LOCAL" />
       <updated>1676058661074</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Commit 2">
-      <option name="closed" value="true" />
-      <created>1688574591223</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1688574591223</updated>
     </task>
     <task id="LOCAL-00012" summary="Commit 2">
       <option name="closed" value="true" />
@@ -424,7 +417,15 @@
       <option name="project" value="LOCAL" />
       <updated>1689020807049</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="Commit 2">
+      <option name="closed" value="true" />
+      <created>1689020893615</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1689020893615</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
