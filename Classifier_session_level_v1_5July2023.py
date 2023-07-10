@@ -147,40 +147,40 @@ def get_dicom_using_xnat_10_July_2023(sessionId, scanId,xnatSession,sessionDir='
     nDicomFiles=0
     command = "echo  success at : ############################################### " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
     subprocess.call(command,shell=True)
-    try:
-        xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
-        url = ("/data/experiments/%s/scans/%s/files?format=json&locator=absolutePath&file_format=DICOM" %
-               (sessionId,scanId ))
-        xnatSession.renew_httpsession()
-        response = xnatSession.httpsess.get(xnatSession.host + url)
-
-        result = response.json()['ResultSet']['Result']
-
-
-        ###########################
-        # metadata_session=response.json()['ResultSet']['Result']
-
-        ####################################
-        df_scan = pd.read_json(json.dumps(result))
-        nDicomFiles =df_scan.shape[0] # len(result)
-        if nDicomFiles == 0:
-            command = "echo  failed at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
-            subprocess.call(command,shell=True)
-        df_scan=sort_dicom_list_DF(df_scan)
-        #     # Get 70% file and ensure it exists
-        selDicomAbs =df_scan.at[get_slice_idx(nDicomFiles),"URI"]   # result[get_slice_idx(nDicomFiles)]['absolutePath']
-        print(selDicomAbs)
-        download_a_singlefile_with_URIString(selDicomAbs,os.path.basename(selDicomAbs),sessionDir)
-        selDicom=os.path.join(sessionDir,os.path.basename(selDicomAbs))
-        wait_for_file_tobe_written(selDicom,10)
-        command = "echo  success at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
-        subprocess.call(command,shell=True)
-        print("I SUCCEEDED AT ::{}".format(inspect.stack()[0][3]))
-    except Exception:
-        command = "echo  failed at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
-        subprocess.call(command,shell=True)
-        command = "echo  Error  : " +  Exception + " >> " + "/output/error.txt"
-        subprocess.call(command,shell=True)
+    # try:
+    #     xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
+    #     url = ("/data/experiments/%s/scans/%s/files?format=json&locator=absolutePath&file_format=DICOM" %
+    #            (sessionId,scanId ))
+    #     xnatSession.renew_httpsession()
+    #     response = xnatSession.httpsess.get(xnatSession.host + url)
+    #
+    #     result = response.json()['ResultSet']['Result']
+    #
+    #
+    #     ###########################
+    #     # metadata_session=response.json()['ResultSet']['Result']
+    #
+    #     ####################################
+    #     df_scan = pd.read_json(json.dumps(result))
+    #     nDicomFiles =df_scan.shape[0] # len(result)
+    #     if nDicomFiles == 0:
+    #         command = "echo  failed at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
+    #         subprocess.call(command,shell=True)
+    #     df_scan=sort_dicom_list_DF(df_scan)
+    #     #     # Get 70% file and ensure it exists
+    #     selDicomAbs =df_scan.at[get_slice_idx(nDicomFiles),"URI"]   # result[get_slice_idx(nDicomFiles)]['absolutePath']
+    #     print(selDicomAbs)
+    #     download_a_singlefile_with_URIString(selDicomAbs,os.path.basename(selDicomAbs),sessionDir)
+    #     selDicom=os.path.join(sessionDir,os.path.basename(selDicomAbs))
+    #     wait_for_file_tobe_written(selDicom,10)
+    #     command = "echo  success at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
+    #     subprocess.call(command,shell=True)
+    #     print("I SUCCEEDED AT ::{}".format(inspect.stack()[0][3]))
+    # except Exception:
+    #     command = "echo  failed at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
+    #     subprocess.call(command,shell=True)
+    #     command = "echo  Error  : " +  Exception + " >> " + "/output/error.txt"
+    #     subprocess.call(command,shell=True)
     return selDicom, nDicomFiles
 def call_get_resourcefiles_metadata_saveascsv():
     try:
