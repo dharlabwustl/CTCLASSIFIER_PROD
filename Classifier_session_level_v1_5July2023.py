@@ -240,34 +240,38 @@ def get_resourcefiles_metadata_saveascsv(URI,resource_dir,dir_to_receive_the_dat
     # return metadata_masks
 
 def run_classifier_7July_2023(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession):
-    # def run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSesDir, xnatSession):
-    print("Classifying scan %s" % scanId)
-    # Select DICOM file for scanId (70% thru the brain)
-    # selDicom, nDicomFiles = get_dicom_using_xnat(sessionId, scanId,xnatSession) #, sessionDir, xnatSesDir, xnatSession)
-    selDicom, nDicomFiles = get_dicom_using_xnat_10_July_2023(sessionId, scanId,xnatSession,sessionDir='/DICOMFILEDIR')
-    # selDicom, nDicomFiles = get_dicom_from_filesystem(sessionId, scanId,xnatSession)
-    print(selDicom)
-    print(nDicomFiles)
-    ####################################################################
-    selDicomDecompr = os.path.join(rawDir, os.path.basename(selDicom))
-    DecompressDCM.decompress(selDicom, selDicomDecompr)
-    # Classify it
-    label = label_probability.classify(selDicomDecompr, jpgDir, scanId, nDicomFiles)
-    print("Scan classification for %s scan %s is '%s'" % (sessionId, scanId, label))
-    # Change value of series_class in XNAT
-    # url = ("/data/experiments/%s/scans/%s?xsiType=xnat:mrScanData&xnat:imageScanData/series_class=%s" %
-    #     (sessionId, scanId, label))
-    url = ("/data/experiments/%s/scans/%s?xsiType=xnat:ctScanData&type=%s" % (sessionId, scanId, label))
-    # xnatSession.renew_httpsession()
-    response = xnatSession.httpsess.put(xnatSession.host + url)
-    if response.status_code == 200 or response.status_code == 201:
-        print("Successfully set series_class for %s scan %s to '%s'" % (sessionId, scanId, label))
-    else:
-        errStr = "ERROR"
-        if response.status_code == 403 or response.status_code == 404:
-            errStr = "PERMISSION DENIED"
-        raise Exception("%s attempting to set series_class for %s %s to '%s': %s" %
-                        (errStr, sessionId, scanId, label, response.text))
+    try:
+        print("Classifying scan %s" % scanId)
+        # Select DICOM file for scanId (70% thru the brain)
+        selDicom, nDicomFiles = get_dicom_using_xnat_10_July_2023(sessionId, scanId,xnatSession,sessionDir='/DICOMFILEDIR')
+        print(selDicom)
+        print(nDicomFiles)
+        ####################################################################
+        selDicomDecompr = os.path.join(rawDir, os.path.basename(selDicom))
+        DecompressDCM.decompress(selDicom, selDicomDecompr)
+        label = label_probability.classify(selDicomDecompr, jpgDir, scanId, nDicomFiles)
+        print("Scan classification for %s scan %s is '%s'" % (sessionId, scanId, label))
+        url = ("/data/experiments/%s/scans/%s?xsiType=xnat:ctScanData&type=%s" % (sessionId, scanId, label))
+        # xnatSession.renew_httpsession()
+        response = xnatSession.httpsess.put(xnatSession.host + url)
+        if response.status_code == 200 or response.status_code == 201:
+            print("Successfully set series_class for %s scan %s to '%s'" % (sessionId, scanId, label))
+        else:
+            errStr = "ERROR"
+            if response.status_code == 403 or response.status_code == 404:
+                errStr = "PERMISSION DENIED"
+            raise Exception("%s attempting to set series_class for %s %s to '%s': %s" %
+                            (errStr, sessionId, scanId, label, response.text))
+        command = "echo  success at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
+        subprocess.call(command,shell=True)
+        print("I SUCCEEDED AT ::{}".format(inspect.stack()[0][3]))
+    except Exception:
+        command = "echo  failed at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
+        subprocess.call(command,shell=True)
+        command = "echo  Error at : " +  Exception + " >> " + "/output/error.txt"
+        subprocess.call(command,shell=True)
+
+
 def call_download_a_singlefile_with_URIString(args):
     url=args.stuff[1]
     filename=args.stuff[2]
