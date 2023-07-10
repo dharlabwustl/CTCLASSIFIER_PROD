@@ -23,3 +23,15 @@ output_directory=/output/
 filename=${output_directory}/${sessionId}.csv
 call_get_metadata_session_saveascsv_arguments=('call_get_metadata_session_saveascsv' ${sessionId} ${filename})
 outputfiles_present=$(python /software1/Classifier_session_level_v1_5July2023.py  "${call_get_metadata_session_saveascsv_arguments[@]}")
+file_to_wait=${filename}
+sleep_second=1
+sleep_second_counter=0
+while [ ! -e ${file_to_wait} ]
+do
+  sleep ${sleep_second}
+  sleep_second_counter=$((sleep_second_counter +1 ))
+  if [ ${sleep_second_counter} -gt 10 ] ; then
+    echo sleep_second_counter::${sleep_second_counter}
+    break
+  fi
+done
