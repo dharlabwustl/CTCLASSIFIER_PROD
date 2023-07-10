@@ -349,7 +349,7 @@ def call_classifier_v1(args):
     except Exception:
         command = "echo  FAILURE at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
         subprocess.call(command,shell=True)
-        command = "echo  ERROR : " +  Exception  + " >> " + "/workingoutput/error.txt"
+        command = "echo  ERROR : " +  Exception  + " >> " + "/output/error.txt"
         subprocess.call(command,shell=True)
 
 
