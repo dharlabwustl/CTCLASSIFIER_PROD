@@ -209,8 +209,28 @@ def run_classifier_7July_2023(sessionDir, rawDir, jpgDir, sessionId, scanId, xna
             errStr = "PERMISSION DENIED"
         raise Exception("%s attempting to set series_class for %s %s to '%s': %s" %
                         (errStr, sessionId, scanId, label, response.text))
+def call_download_a_singlefile_with_URIString(args):
+    url=args.stuff[1]
+    filename=args.stuff[2]
+    dir_to_save=args.stuff[3]
+    download_a_singlefile_with_URIString(url,filename,dir_to_save)
+    return
 
-
+def download_a_singlefile_with_URIString(url,filename,dir_to_save):
+    print("url::{}::filename::{}::dir_to_save::{}".format(url,filename,dir_to_save))
+    xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
+    xnatSession.renew_httpsession()
+    # command="echo  " + url['URI'] + " >> " +  os.path.join(dir_to_save,"test.csv")
+    # subprocess.call(command,shell=True)
+    response = xnatSession.httpsess.get(xnatSession.host +url) #/data/projects/ICH/resources/179772/files/ICH_CTSESSIONS_202305170753.csv") #
+    #                                                       # "/data/experiments/SNIPR02_E03548/scans/1-CT1/resources/147851/files/ICH_0001_01022017_0414_1-CT1_threshold-1024.0_22121.0TOTAL_VersionDate-11302022_04_22_2023.csv") ## url['URI'])
+    zipfilename=os.path.join(dir_to_save,filename ) #"/data/projects/ICH/resources/179772/files/ICH_CTSESSIONS_202305170753.csv")) #sessionId+scanId+'.zip'
+    with open(zipfilename, "wb") as f:
+        for chunk in response.iter_content(chunk_size=512):
+            if chunk:  # filter out keep-alive new chunks
+                f.write(chunk)
+    xnatSession.close_httpsession()
+    return zipfilename
 def run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession):
 # def run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSesDir, xnatSession):
     print("Classifying scan %s" % scanId)
@@ -321,6 +341,8 @@ def main():
         return_value=call_get_metadata_session_saveascsv(args)
     if name_of_the_function == "call_get_resourcefiles_metadata_saveascsv_args":  #
         return_value=call_get_resourcefiles_metadata_saveascsv_args(args)
+    if name_of_the_function == "call_download_a_singlefile_with_URIString":  #
+        return_value=call_download_a_singlefile_with_URIString(args)
     return  return_value
 
 

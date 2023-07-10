@@ -43,10 +43,18 @@ while IFS=',' read -ra array; do
   URI=${array[6]}
   echo "URI":${URI}
   resource_dir="DICOM"
-  output_csvfile=${sessionId}_${array[4]}.csv
+  output_csvfile=${sessionId}_SCANSCANTEMP_${array[4]}.csv
   echo "output_csvfile":${output_csvfile}
   dir_to_receive_the_data=${output_directory}
-  call_get_resourcefiles_metadata_saveascsv_args_arguments=('call_get_resourcefiles_metadata_saveascsv_args' ${URI} ${resource_dir} ${dir_to_receive_the_data} ${output_csvfile} )
+  call_get_resourcefiles_metadata_saveascsv_args_arguments=('call_get_resourcefiles_metadata_saveascsv_args' ${URI} ${resource_dir} ${dir_to_receive_the_data} ${output_csvfile})
   outputfiles_present=$(python /software1/Classifier_session_level_v1_5July2023.py "${call_get_resourcefiles_metadata_saveascsv_args_arguments[@]}")
   wait_for_file ${dir_to_receive_the_data}/${output_csvfile}
+  while IFS=',' read -ra array1; do
+    url=${array1[6]}
+    echo url::${url}
+#    filename=args.stuff[2]
+#    dir_to_save=args.stuff[3]
+    call_download_a_singlefile_with_URIString_arguments=('call_download_a_singlefile_with_URIString' ${URI} ${resource_dir} ${dir_to_receive_the_data} ${output_csvfile})
+#    outputfiles_present=$(python /software1/Classifier_session_level_v1_5July2023.py "${call_download_a_singlefile_with_URIString_arguments[@]}")
+  done < <(tail -n +2 "${filename}")
 done < <(tail -n +2 "${filename}")
