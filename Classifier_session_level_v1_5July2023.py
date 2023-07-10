@@ -148,7 +148,7 @@ def get_dicom_using_xnat_10_July_2023(sessionId, scanId,xnatSession,sessionDir='
     command = "echo  success at : ############################################### " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
     subprocess.call(command,shell=True)
     try:
-        # xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
+        xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
         url = ("/data/experiments/%s/scans/%s/files?format=json&locator=absolutePath&file_format=DICOM" %
                (sessionId,scanId ))
         xnatSession.renew_httpsession()
