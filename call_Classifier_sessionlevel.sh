@@ -51,7 +51,7 @@ while IFS=',' read -ra array; do
   wait_for_file ${dir_to_receive_the_data}/${output_csvfile}
   SCAN_ID=${array[4]}
   echo "SCAN_ID::${SCAN_ID}"
-  if [ ${SCAN_ID} -eq 2 ]; then
+  if [ ${SCAN_ID} == "2" ]; then
     while IFS=',' read -ra array1; do
       url=${array1[6]}
       #    echo url::${url}
