@@ -18,7 +18,7 @@ XNAT_USER = os.environ['XNAT_USER']
 XNAT_PASS = os.environ['XNAT_PASS']
 catalogXmlRegex = re.compile(r'.*\.xml$')
 
-def wait_for_file_tobe_written(file_path,time_to_wait):
+def wait_for_file_tobe_written(file_path,time_to_wait=10):
     # time_to_wait = 10
     time_counter = 0
     while not os.path.exists(file_path):
@@ -27,6 +27,8 @@ def wait_for_file_tobe_written(file_path,time_to_wait):
         if time_counter > time_to_wait:break
 def get_slice_idx(nDicomFiles):
     return min(nDicomFiles-1, math.ceil(nDicomFiles*0.7)) # slice 70% through the brain
+
+
 def get_metadata_session(sessionId):
     url = ("/data/experiments/%s/scans/?format=json" %    (sessionId))
     xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
@@ -100,6 +102,11 @@ def get_dicom_using_xnat(sessionId, scanId,xnatSession):
     response = xnatSession.httpsess.get(xnatSession.host + url)
 
     result = response.json()['ResultSet']['Result']
+    ###########################
+    # metadata_session=response.json()['ResultSet']['Result']
+    # df_scan = pd.read_json(json.dumps(result))
+    # df_scan.to_csv(filename,index=False)
+    ####################################
     nDicomFiles = len(result)
     if nDicomFiles == 0:
         raise Exception("No DICOM files for %s stored in XNAT" % scanId)
@@ -134,6 +141,57 @@ def get_dicom_using_xnat(sessionId, scanId,xnatSession):
 # #/ZIPFILEDIR/BJH_011_13102019_0715/*/*/*/*/**
     selDicom=os.path.join(sessionDir,os.path.basename(selDicomAbs))
     print(selDicom) 
+    return selDicom, nDicomFiles
+def get_dicom_using_xnat_10_July_2023(sessionId, scanId,xnatSession,sessionDir='/DICOMFILEDIR'):
+    # xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
+    url = ("/data/experiments/%s/scans/%s/files?format=json&locator=absolutePath&file_format=DICOM" %
+           (sessionId,scanId ))
+    xnatSession.renew_httpsession()
+    response = xnatSession.httpsess.get(xnatSession.host + url)
+
+    result = response.json()['ResultSet']['Result']
+    df_scan = pd.read_json(json.dumps(result))
+    ###########################
+    # metadata_session=response.json()['ResultSet']['Result']
+
+    ####################################
+    nDicomFiles =df_scan.shape[0] # len(result)
+    if nDicomFiles == 0:
+        raise Exception("No DICOM files for %s stored in XNAT" % scanId)
+    df_scan=sort_dicom_list_DF(df_scan)
+    #     # Get 70% file and ensure it exists
+    selDicomAbs =df_scan.at[get_slice_idx(nDicomFiles),"URI"]   # result[get_slice_idx(nDicomFiles)]['absolutePath']
+    print(selDicomAbs)
+    download_a_singlefile_with_URIString(selDicomAbs,os.path.basename(selDicomAbs),sessionDir)
+    selDicom=os.path.join(sessionDir,os.path.basename(selDicomAbs))
+    wait_for_file_tobe_written(selDicom,10)
+    # #     # selDicomAbs_split=selDicomAbs.split('/')
+    # #     # print(selDicomAbs_split[-5]+'_'+selDicomAbs_split[-3])
+    # #     ######################################################################################
+    #
+    # #     # print("No DICOM found in %s directory, querying XNAT for DICOM path" % scanId)
+    # url = ("/data/experiments/%s/scans/%s/resources/DICOM/files?format=zip" %
+    #        (sessionId, scanId))
+    #
+    # xnatSession.renew_httpsession()
+    # response = xnatSession.httpsess.get(xnatSession.host + url)
+    # zipfilename=sessionId+scanId+'.zip'
+    # with open(zipfilename, "wb") as f:
+    #     for chunk in response.iter_content(chunk_size=512):
+    #         if chunk:  # filter out keep-alive new chunks
+    #             f.write(chunk)
+    # command = 'unzip -d /ZIPFILEDIR ' + zipfilename
+    # subprocess.call(command,shell=True)
+    #
+    # command = 'cp  /ZIPFILEDIR/*/*/*/*/*/*/*.dcm  /DICOMFILEDIR/ '
+    # subprocess.call(command,shell=True)
+    # #     #################################################################
+    # sessionDir='/DICOMFILEDIR'
+    #
+    # selDicomAbs = result[get_slice_idx(nDicomFiles)]['absolutePath']
+    # # #/ZIPFILEDIR/BJH_011_13102019_0715/*/*/*/*/**
+    # selDicom=os.path.join(sessionDir,os.path.basename(selDicomAbs))
+    # print(selDicom)
     return selDicom, nDicomFiles
 def call_get_resourcefiles_metadata_saveascsv():
     try:
@@ -223,6 +281,14 @@ def sort_dicom_list(DICOM_LIST_CSV):
     DICOM_METADATA_DF=DICOM_METADATA_DF.sort_values("SLICE_NUM")
     # DICOM_LIST_CSV_NEW=DICOM_LIST_CSV.split('.csv')[0]+"SORTED.csv"
     DICOM_METADATA_DF.to_csv(DICOM_LIST_CSV,index=False)
+def sort_dicom_list_DF(DICOM_METADATA_DF):
+    # DICOM_METADATA_DF=pd.read_csv(DICOM_LIST_CSV)
+    DICOM_METADATA_DF["SLICE_NUM"]=DICOM_METADATA_DF["Name"].str.split("-").str[-2]
+    DICOM_METADATA_DF.SLICE_NUM = DICOM_METADATA_DF.SLICE_NUM.astype(float)
+    DICOM_METADATA_DF=DICOM_METADATA_DF.sort_values("SLICE_NUM")
+    return  DICOM_METADATA_DF
+    # DICOM_LIST_CSV_NEW=DICOM_LIST_CSV.split('.csv')[0]+"SORTED.csv"
+    # DICOM_METADATA_DF.to_csv(DICOM_LIST_CSV,index=False)
 def call_sort_dicom_list(args):
     DICOM_LIST_CSV=args.stuff[1]
     sort_dicom_list(DICOM_LIST_CSV)
