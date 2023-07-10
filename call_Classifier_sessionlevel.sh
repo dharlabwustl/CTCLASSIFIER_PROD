@@ -40,7 +40,7 @@ call_get_metadata_session_saveascsv_arguments=('call_get_metadata_session_saveas
 outputfiles_present=$(python /software1/Classifier_session_level_v1_5July2023.py "${call_get_metadata_session_saveascsv_arguments[@]}")
 wait_for_file ${filename}
 echo outputfiles_present::${outputfiles_present} >>/output/error.txt
-while IFS=',' read -ra array; do
+#while IFS=',' read -ra array; do
   ################################################
   sessionDir=/DICOMFILEDIR
   workingDir=/input      # args.stuff[2]
@@ -81,4 +81,4 @@ while IFS=',' read -ra array; do
   #
   #    break
   #  fi
-done < <(tail -n +2 "${filename}")
+#done < <(tail -n +2 "${filename}")
