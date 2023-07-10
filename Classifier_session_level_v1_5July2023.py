@@ -145,6 +145,8 @@ def get_dicom_using_xnat(sessionId, scanId,xnatSession):
 def get_dicom_using_xnat_10_July_2023(sessionId, scanId,xnatSession,sessionDir='/DICOMFILEDIR'):
     selDicom=""
     nDicomFiles=0
+    command = "echo  success at : ############################################### " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
+    subprocess.call(command,shell=True)
     try:
         # xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
         url = ("/data/experiments/%s/scans/%s/files?format=json&locator=absolutePath&file_format=DICOM" %
@@ -153,8 +155,7 @@ def get_dicom_using_xnat_10_July_2023(sessionId, scanId,xnatSession,sessionDir='
         response = xnatSession.httpsess.get(xnatSession.host + url)
 
         result = response.json()['ResultSet']['Result']
-        command = "echo  success at : ############################################### " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
-        subprocess.call(command,shell=True)
+
 
         ###########################
         # metadata_session=response.json()['ResultSet']['Result']
