@@ -62,7 +62,7 @@ while IFS=',' read -ra array; do
 
       dir_to_save=/DICOMFILEDIR ##args.stuff[3]
       call_download_a_singlefile_with_URIString_arguments=('call_download_a_singlefile_with_URIString' ${url} ${dicom_filename} ${dir_to_save})
-#      outputfiles_present=$(python /software1/Classifier_session_level_v1_5July2023.py "${call_download_a_singlefile_with_URIString_arguments[@]}")
+      outputfiles_present=$(python /software1/Classifier_session_level_v1_5July2023.py "${call_download_a_singlefile_with_URIString_arguments[@]}")
     done < <(tail -n +2 "${dir_to_receive_the_data}/${output_csvfile}")
 
     break
