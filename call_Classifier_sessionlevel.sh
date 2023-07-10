@@ -41,22 +41,24 @@ wait_for_file ${filename}
 echo outputfiles_present::${outputfiles_present} >>/output/error.txt
 while IFS=',' read -ra array; do
   URI=${array[6]}
-  echo "URI":${URI}
+#  echo "URI":${URI}
   resource_dir="DICOM"
   output_csvfile=${sessionId}_SCANSCANTEMP_${array[4]}.csv
-  echo "output_csvfile":${output_csvfile}
+#  echo "output_csvfile":${output_csvfile}
   dir_to_receive_the_data=${output_directory}
   call_get_resourcefiles_metadata_saveascsv_args_arguments=('call_get_resourcefiles_metadata_saveascsv_args' ${URI} ${resource_dir} ${dir_to_receive_the_data} ${output_csvfile})
   outputfiles_present=$(python /software1/Classifier_session_level_v1_5July2023.py "${call_get_resourcefiles_metadata_saveascsv_args_arguments[@]}")
   wait_for_file ${dir_to_receive_the_data}/${output_csvfile}
   while IFS=',' read -ra array1; do
     url=${array1[6]}
-    echo url::${url}
+#    echo url::${url}
     dicom_filename=${array1[8]}
-    echo dicom_filename::${dicom_filename}
+#    echo dicom_filename::${dicom_filename}
 #    filename=args.stuff[2]
     dir_to_save=/DICOMFILEDIR ##args.stuff[3]
     call_download_a_singlefile_with_URIString_arguments=('call_download_a_singlefile_with_URIString' ${url} ${dicom_filename} ${dir_to_save} )
 #    outputfiles_present=$(python /software1/Classifier_session_level_v1_5July2023.py "${call_download_a_singlefile_with_URIString_arguments[@]}")
   done < <(tail -n +2 "${dir_to_receive_the_data}/${output_csvfile}")
+  SCAN_ID=${array[4]}
+  echo "SCAN_ID::${SCAN_ID}"
 done < <(tail -n +2 "${filename}")
