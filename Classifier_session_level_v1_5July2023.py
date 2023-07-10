@@ -171,7 +171,7 @@ def get_dicom_using_xnat_10_July_2023(sessionId, scanId,xnatSession,sessionDir='
         df_scan=sort_dicom_list_DF(df_scan)
         df_scan.to_csv("/input/temp.csv")
         # #     # Get 70% file and ensure it exists
-        selDicomAbs =df_scan.iloc[int(get_slice_idx(nDicomFiles)),"absolutePath"]   # result[get_slice_idx(nDicomFiles)]['absolutePath']
+        selDicomAbs =df_scan.at[int(get_slice_idx(nDicomFiles)),"absolutePath"]   # result[get_slice_idx(nDicomFiles)]['absolutePath']
         # print(selDicomAbs)
         # download_a_singlefile_with_URIString(selDicomAbs,os.path.basename(selDicomAbs),sessionDir)
         # selDicom=os.path.join(sessionDir,os.path.basename(selDicomAbs))
