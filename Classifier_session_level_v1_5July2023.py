@@ -145,7 +145,7 @@ def get_dicom_using_xnat(sessionId, scanId,xnatSession):
 def get_dicom_using_xnat_10_July_2023(sessionId, scanId,xnatSession,sessionDir='/DICOMFILEDIR'):
     selDicom=""
     nDicomFiles=0
-    command = "echo  success at : ############################################### " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
+    command = "echo  success at : *********************************** " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
     subprocess.call(command,shell=True)
     # try:
     #     xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
