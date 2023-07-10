@@ -399,12 +399,12 @@ def classifier_v1(sessionDir,workingDir,sessionId):
             except Exception as e: # work on python 3.x
                 print('Exception occured: '+ str(e))
                 continue
-        command = "echo  SUCCESS at : " +  inspect.stack()[0][3]  + " >> " + "/workingoutput/error.txt"
+        command = "echo  SUCCESS at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
         subprocess.call(command,shell=True)
     except Exception:
-        command = "echo  FAILURE at : " +  inspect.stack()[0][3]  + " >> " + "/workingoutput/error.txt"
+        command = "echo  FAILURE at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
         subprocess.call(command,shell=True)
-        command = "echo  ERROR : " +  Exception  + " >> " + "/workingoutput/error.txt"
+        command = "echo  ERROR : " +  Exception  + " >> " + "/output/error.txt"
         subprocess.call(command,shell=True)
 def main():
     print("WO ZAI ::{}".format("main"))
