@@ -41,3 +41,4 @@ filename=${output_directory}/${sessionId}.csv
 call_get_metadata_session_saveascsv_arguments=('call_get_metadata_session_saveascsv' ${sessionId} ${filename})
 outputfiles_present=$(python /software1/Classifier_session_level_v1_5July2023.py  "${call_get_metadata_session_saveascsv_arguments[@]}")
 wait_for_file ${filename}
+echo outputfiles_present::${outputfiles_present}
