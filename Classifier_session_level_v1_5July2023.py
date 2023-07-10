@@ -161,8 +161,8 @@ def get_dicom_using_xnat_10_July_2023(sessionId, scanId,xnatSession,sessionDir='
         # # metadata_session=response.json()['ResultSet']['Result']
         #
         # ####################################
-        # df_scan = pd.read_json(json.dumps(result))
-        # nDicomFiles =df_scan.shape[0] # len(result)
+        df_scan = pd.read_json(json.dumps(result))
+        nDicomFiles =df_scan.shape[0] # len(result)
         # if nDicomFiles == 0:
         #     command = "echo  failed at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
         #     subprocess.call(command,shell=True)
