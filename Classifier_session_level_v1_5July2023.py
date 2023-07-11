@@ -171,11 +171,16 @@ def get_dicom_using_xnat_10_July_2023(sessionId, scanId,xnatSession,sessionDir='
         df_scan=sort_dicom_list_DF(df_scan)
         df_scan.to_csv("/input/temp.csv")
         # #     # Get 70% file and ensure it exists
-        selDicomAbs =df_scan.at[int(get_slice_idx(nDicomFiles)),"absolutePath"]   # result[get_slice_idx(nDicomFiles)]['absolutePath']
+
         # print(selDicomAbs)
-        download_a_singlefile_with_URIString(selDicomAbs,os.path.basename(selDicomAbs),sessionDir)
+        for indexx , rows in df_scan.iterrows():
+            this_url=rows["absolutePath"]
+            this_url_local=os.path.join(sessionDir,os.path.basename(this_url))
+            download_a_singlefile_with_URIString(this_url,os.path.basename(this_url),sessionDir)
+            wait_for_file_tobe_written(this_url_local,10)
+        selDicomAbs =df_scan.at[int(get_slice_idx(nDicomFiles)),"absolutePath"]   # result[get_slice_idx(nDicomFiles)]['absolutePath']
         selDicom=os.path.join(sessionDir,os.path.basename(selDicomAbs))
-        wait_for_file_tobe_written(selDicom,10)
+
         command = "echo  success at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
         subprocess.call(command,shell=True)
         print("I SUCCEEDED AT ::{}".format(inspect.stack()[0][3]))
@@ -388,8 +393,8 @@ def classifier_v1(sessionDir,workingDir,sessionId):
                 # for x in range(10):
                 #     print("{}:XNAT_HOST".format(XNAT_HOST))
                 xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
-                run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession)
-                # run_classifier_7July_2023(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession)
+                # run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession)
+                run_classifier_7July_2023(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession)
                 # Handle DICOM files that are not stored in a directory matching their XNAT scanId
                 xnatSession.close_httpsession()
             except Exception as e: # work on python 3.x
