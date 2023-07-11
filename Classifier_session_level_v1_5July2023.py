@@ -369,7 +369,7 @@ def classifier_v1(sessionDir,workingDir,sessionId):
         for x in metadata_session:
             # if int(x['ID']) == scanId:
             scanId=x['ID']
-            if str(scanId) == "1":
+            if str(scanId) == "3":
 
 
                 try:
