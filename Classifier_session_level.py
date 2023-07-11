@@ -133,12 +133,12 @@ def run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession):
     # xnatSession.renew_httpsession()
     response = xnatSession.httpsess.put(xnatSession.host + url)
     if response.status_code == 200 or response.status_code == 201:
-        print("Successfully set series_class for %s scan %s to '%s'" % (sessionId, scanId, label))
+        print("Successfully set type for %s scan %s to '%s'" % (sessionId, scanId, label))
     else:
         errStr = "ERROR"
         if response.status_code == 403 or response.status_code == 404:
             errStr = "PERMISSION DENIED"
-        raise Exception("%s attempting to set series_class for %s %s to '%s': %s" % 
+        raise Exception("%s attempting to set type for %s %s to '%s': %s" %
             (errStr, sessionId, scanId, label, response.text))
 
 
