@@ -388,8 +388,8 @@ def classifier_v1(sessionDir,workingDir,sessionId):
                 # for x in range(10):
                 #     print("{}:XNAT_HOST".format(XNAT_HOST))
                 xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
-                # run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession)
-                run_classifier_7July_2023(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession)
+                run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession)
+                # run_classifier_7July_2023(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession)
                 # Handle DICOM files that are not stored in a directory matching their XNAT scanId
                 xnatSession.close_httpsession()
             except Exception as e: # work on python 3.x
