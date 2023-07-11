@@ -47,6 +47,7 @@ echo outputfiles_present::${outputfiles_present} >>/output/error.txt
   sessionId=${sessionId} # args.stuff[3]
   call_classifier_v1_arguments=('call_classifier_v1' ${sessionId} ${workingDir} ${sessionId})
   outputfiles_present=$(python /software1/Classifier_session_level_v1_5July2023.py "${call_classifier_v1_arguments[@]}")
+  echo outputfiles_present::${outputfiles_present}
   ################################################
   #
   #  URI=${array[6]}
