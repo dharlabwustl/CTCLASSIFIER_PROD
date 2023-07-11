@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3ad48966-0400-4eb0-b5b5-733bf7ded71f" name="Changes" comment="Commit 2" />
+    <list default="true" id="3ad48966-0400-4eb0-b5b5-733bf7ded71f" name="Changes" comment="Commit 2">
+      <change beforePath="$PROJECT_DIR$/Classifier_session_level.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classifier_session_level.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -107,14 +109,6 @@
       <option name="presentableId" value="LOCAL-00010" />
       <option name="project" value="LOCAL" />
       <updated>1676058661074</updated>
-    </task>
-    <task id="LOCAL-00051" summary="Commit 2">
-      <option name="closed" value="true" />
-      <created>1689022234327</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1689022234327</updated>
     </task>
     <task id="LOCAL-00052" summary="Commit 2">
       <option name="closed" value="true" />
@@ -420,7 +414,15 @@
       <option name="project" value="LOCAL" />
       <updated>1689096149020</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="Commit 2">
+      <option name="closed" value="true" />
+      <created>1689096289663</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1689096289663</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
