@@ -333,6 +333,8 @@ def run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession):
     response = xnatSession.httpsess.put(xnatSession.host + url)
     if response.status_code == 200 or response.status_code == 201:
         print("Successfully set series_class for %s scan %s to '%s'" % (sessionId, scanId, label))
+        command = "echo  success at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
+        subprocess.call(command,shell=True)
     else:
         errStr = "ERROR"
         if response.status_code == 403 or response.status_code == 404:
@@ -367,48 +369,49 @@ def classifier_v1(sessionDir,workingDir,sessionId):
         for x in metadata_session:
             # if int(x['ID']) == scanId:
             scanId=x['ID']
+            if str(scanId) == "1":
 
 
-            try:
+                try:
 
-                ###########################################################
-                # xnatSesDir = sys.argv[4]
-                # scans = [sys.argv[4]] #sys.argv[5].split()
-                # scanId=scans[0]
-                # Make working dirs
-                rawDir = os.path.join(workingDir, 'RAW')
-                os.makedirs(rawDir, exist_ok = True)
-                jpgDir = os.path.join(workingDir, 'JPG' )
-                os.makedirs(jpgDir, exist_ok = True)
-                command="rm -r  " + rawDir + "/*"
-                subprocess.call(command,shell=True)
-                command="rm -r  " + jpgDir + "/*"
-                subprocess.call(command,shell=True)
-                command="rm -r /NIFTIFILEDIR/*"
-                subprocess.call(command,shell=True)
-                # for x in range(1,5):
-                #     print(sys.argv[x])
-                command="rm -r /ZIPFILEDIR/*"
-                subprocess.call(command,shell=True)
-                command="rm -r /DICOMFILEDIR/*"
-                subprocess.call(command,shell=True)
-                # for x in range(10):
-                #     print("{}:XNAT_HOST".format(XNAT_HOST))
-                xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
-                run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession)
-                # run_classifier_7July_2023(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession)
-                # Handle DICOM files that are not stored in a directory matching their XNAT scanId
-                xnatSession.close_httpsession()
-            except Exception as e: # work on python 3.x
-                print('Exception occured: '+ str(e))
-                continue
-        command = "echo  SUCCESS at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
-        subprocess.call(command,shell=True)
-    except Exception:
-        command = "echo  FAILURE at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
-        subprocess.call(command,shell=True)
-        command = "echo  ERROR : " +  Exception  + " >> " + "/output/error.txt"
-        subprocess.call(command,shell=True)
+                    ###########################################################
+                    # xnatSesDir = sys.argv[4]
+                    # scans = [sys.argv[4]] #sys.argv[5].split()
+                    # scanId=scans[0]
+                    # Make working dirs
+                    rawDir = os.path.join(workingDir, 'RAW')
+                    os.makedirs(rawDir, exist_ok = True)
+                    jpgDir = os.path.join(workingDir, 'JPG' )
+                    os.makedirs(jpgDir, exist_ok = True)
+                    command="rm -r  " + rawDir + "/*"
+                    subprocess.call(command,shell=True)
+                    command="rm -r  " + jpgDir + "/*"
+                    subprocess.call(command,shell=True)
+                    command="rm -r /NIFTIFILEDIR/*"
+                    subprocess.call(command,shell=True)
+                    # for x in range(1,5):
+                    #     print(sys.argv[x])
+                    command="rm -r /ZIPFILEDIR/*"
+                    subprocess.call(command,shell=True)
+                    command="rm -r /DICOMFILEDIR/*"
+                    subprocess.call(command,shell=True)
+                    # for x in range(10):
+                    #     print("{}:XNAT_HOST".format(XNAT_HOST))
+                    xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
+                    run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession)
+                    # run_classifier_7July_2023(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession)
+                    # Handle DICOM files that are not stored in a directory matching their XNAT scanId
+                    xnatSession.close_httpsession()
+                except Exception as e: # work on python 3.x
+                    print('Exception occured: '+ str(e))
+                    continue
+            command = "echo  SUCCESS at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
+            subprocess.call(command,shell=True)
+        except Exception:
+            command = "echo  FAILURE at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
+            subprocess.call(command,shell=True)
+            command = "echo  ERROR : " +  Exception  + " >> " + "/output/error.txt"
+            subprocess.call(command,shell=True)
 def main():
     print("WO ZAI ::{}".format("main"))
     parser = argparse.ArgumentParser()
