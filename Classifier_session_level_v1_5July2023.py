@@ -407,11 +407,11 @@ def classifier_v1(sessionDir,workingDir,sessionId):
                     continue
             command = "echo  SUCCESS at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
             subprocess.call(command,shell=True)
-        except Exception:
-            command = "echo  FAILURE at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
-            subprocess.call(command,shell=True)
-            command = "echo  ERROR : " +  Exception  + " >> " + "/output/error.txt"
-            subprocess.call(command,shell=True)
+    except Exception:
+        command = "echo  FAILURE at : " +  inspect.stack()[0][3]  + " >> " + "/output/error.txt"
+        subprocess.call(command,shell=True)
+        command = "echo  ERROR : " +  Exception  + " >> " + "/output/error.txt"
+        subprocess.call(command,shell=True)
 def main():
     print("WO ZAI ::{}".format("main"))
     parser = argparse.ArgumentParser()
