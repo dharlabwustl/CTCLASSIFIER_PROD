@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import inspect,subprocess
 
 import os, sys, errno, shutil, uuid
 import math
@@ -133,12 +134,18 @@ def run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession):
         url = ("/data/experiments/%s/scans/%s?xsiType=xnat:ctScanData&type=%s" % (sessionId, scanId, label))
         # xnatSession.renew_httpsession()
         response = xnatSession.httpsess.put(xnatSession.host + url)
+        command="echo successful at :: {}::maskfilename::{} >> /software1/error.txt".format(inspect.stack()[0][3],"run_classifier")
+        subprocess.call(command,shell=True)
     except:
         try:
             url = ("/data/experiments/%s/scans/%s?xsiType=xnat:mrScanData&type=%s" % (sessionId, scanId, label))
     # xnatSession.renew_httpsession()
             response = xnatSession.httpsess.put(xnatSession.host + url)
+            command="echo successful at :: {}::maskfilename::{} >> /software1/error.txt".format(inspect.stack()[0][3],"run_classifier")
+            subprocess.call(command,shell=True)
         except:
+            command="echo failed at :: {}::maskfilename::{} >> /software1/error.txt".format(inspect.stack()[0][3],"run_classifier")
+            subprocess.call(command,shell=True)
             pass
     if response.status_code == 200 or response.status_code == 201:
         print("Successfully set type for %s scan %s to '%s'" % (sessionId, scanId, label))
