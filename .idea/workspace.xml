@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="3ad48966-0400-4eb0-b5b5-733bf7ded71f" name="Changes" comment="Commit 2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/builddockerimage.sh" beforeDir="false" afterPath="$PROJECT_DIR$/builddockerimage.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,14 +114,6 @@
       <option name="presentableId" value="LOCAL-00010" />
       <option name="project" value="LOCAL" />
       <updated>1676058661074</updated>
-    </task>
-    <task id="LOCAL-00063" summary="Commit 2">
-      <option name="closed" value="true" />
-      <created>1689023586383</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1689023586383</updated>
     </task>
     <task id="LOCAL-00064" summary="Commit 2">
       <option name="closed" value="true" />
@@ -425,7 +419,15 @@
       <option name="project" value="LOCAL" />
       <updated>1692915343023</updated>
     </task>
-    <option name="localTasksCounter" value="102" />
+    <task id="LOCAL-00102" summary="Commit 2">
+      <option name="closed" value="true" />
+      <created>1692918066857</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1692918066857</updated>
+    </task>
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

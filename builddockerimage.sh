@@ -11,7 +11,7 @@ python /media/atul/WDJan2022/WASHU_WORKS/PROJECTS/FROM_DOCUMENTS/docker-images/c
  imagename=$2
  repository_name=${3}
 #imagename=hosseinclassifier1
-docker login registry.nrg.wustl.edu
+#docker login registry.nrg.wustl.edu
 #docker build -t docker/nrg-repo/sharmaatul11/${imagename} .
 #docker login registry.nrg.wustl.edu
 #docker push docker/nrg-repo/sharmaatul11/${imagename}
