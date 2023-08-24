@@ -27,12 +27,12 @@ function wait_for_file() {
 #done
 #
 #echo “${file_to_wait} has been created”
- scanID=$2 #8
- rm -r /ZIPFILEDIR/*
- cp /mounted_directory/Classifier_wholeSession.py /run/Classifier_wholeSession.py
- cd /run/
- echo $PWD
-#python /software1/Classifier_session_level_SAH.py /input /working ${sessionId}  #${scanID}
+scanID=$2 #8
+rm -r /ZIPFILEDIR/*
+# cp /mounted_directory/Classifier_wholeSession.py /run/Classifier_wholeSession.py
+cd /run/
+echo $PWD
+python /software1/Classifier_session_level_SAH.py /input /working ${sessionId}  #${scanID}
 
 #output_directory=/output/
 #filename=${output_directory}/${sessionId}.csv
