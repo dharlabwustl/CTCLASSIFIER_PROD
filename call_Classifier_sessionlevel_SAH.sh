@@ -32,7 +32,7 @@ rm -r /ZIPFILEDIR/*
 # cp /mounted_directory/Classifier_wholeSession.py /run/Classifier_wholeSession.py
 cd /run/
 echo $PWD
-#python /software1/Classifier_session_level_SAH.py /input /working ${sessionId}  #${scanID}
+python /software1/Classifier_session_level_SAH.py /input /working ${sessionId}  #${scanID}
 
 #output_directory=/output/
 #filename=${output_directory}/${sessionId}.csv
