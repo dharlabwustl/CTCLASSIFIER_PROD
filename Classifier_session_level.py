@@ -147,6 +147,8 @@ if __name__ == '__main__':
     sessionDir = sys.argv[1]
     workingDir = sys.argv[2]
     sessionId = sys.argv[3]
+    print ("Classifier_session_level.py sessionDir: {} workingDir: {} sessionId: {}".format (sessionDir, workingDir,sessionId))
+    print ("XNAT_HOST: {} XNAT_USER: {} XNAT_PASS: {}".format(XNAT_HOST, XNAT_USER, XNAT_PASS))
     # print ("Classifier_session_level.py sessionDir: %, workingDir: %, sessionId: %" % (sessionDir, workingDir,sessionId))
     # print ("XNAT_HOST: %, XNAT_USER: %, XNAT_PASS: %" (XNAT_HOST, XNAT_USER, XNAT_PASS))
     ##############################################
