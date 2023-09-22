@@ -15,4 +15,15 @@ XNAT_PASS=${3}
 XNAT_HOST=${4}
 TYPE_OF_PROGRAM=${6}
 
+echo downloadcodefromgithub.sh $*
+echo SESSION_ID $SESSION_ID
+echo XNAT_USER $XNAT_USER
+echo XNAT_PASS $XNAT_PASS
+echo XNAT_HOST $XNAT_HOST
+echo TYPE_OF_PROGRAM $TYPE_OF_PROGRAM
+echo ""
+
+
+
+echo /software1/script_to_call_main_program.sh $SESSION_ID $XNAT_USER $XNAT_PASS ${XNAT_HOST} ${TYPE_OF_PROGRAM}
 /software1/script_to_call_main_program.sh $SESSION_ID $XNAT_USER $XNAT_PASS ${XNAT_HOST} ${TYPE_OF_PROGRAM}

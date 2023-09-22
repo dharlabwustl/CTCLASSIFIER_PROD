@@ -5,6 +5,15 @@ export XNAT_USER=${2}
 export XNAT_PASS=${3}
 export XNAT_HOST=${4} #"https://snipr-dev-test1.nrg.wustl.edu"
 sessionId=$1          #SNIPR_E03539 #SNIPR_E03526
+
+echo call_Classifier_sessionlevel.sh $*
+echo XNAT_USER $XNAT_USER
+echo XNAT_PASS $XNAT_PASS
+echo XNAT_HOST $XNAT_HOST
+echo sessionId $sessionId
+echo ""
+
+
 function wait_for_file() {
   local file_to_wait=${1} #${filename}
   local sleep_second=1
@@ -32,6 +41,7 @@ function wait_for_file() {
 # cp /mounted_directory/Classifier_wholeSession.py /run/Classifier_wholeSession.py
  cd /run/
  echo $PWD
+echo python /software1/Classifier_session_level.py /input /working ${sessionId}  #${scanID}
 python /software1/Classifier_session_level.py /input /working ${sessionId}  #${scanID}
 
 #output_directory=/output/
