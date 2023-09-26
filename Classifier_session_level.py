@@ -95,32 +95,34 @@ def get_dicom_using_xnat(sessionId, scanId,xnatSession):
     xnatSession.renew_httpsession()
     response = xnatSession.httpsess.get(xnatSession.host + url)
     zipfilename=sessionId+scanId+'.zip'
-#############################
+    #############################
     print(zipfilename)
     print('/ZIPFILEDIR')
-    subprocess.call("pwd",shell=True)
-    subprocess.call("ls -la",shell=True)
-    subprocess.call('ls -la /ZIPFILEDIR',shell=True)
+    subprocess.run("pwd",shell=True, capture_output=True)
+    subprocess.run("ls -la",shell=True, capture_output=True)
+    subprocess.run("whoami",shell=True, capture_output=True)
+    subprocess.run('ls -la /ZIPFILEDIR',shell=True, capture_output=True)
     ###############################
     with open(zipfilename, "wb") as f:
         print("Zip file opened")
         for chunk in response.iter_content(chunk_size=512):
             if chunk:  # filter out keep-alive new chunks
                 f.write(chunk)
-############################
+    ############################
     print("Zip file stored")
-    subprocess.call("ls -la",shell=True)
+    subprocess.run("ls -la",shell=True, capture_output=True)
     #####################
     command = 'unzip -d /ZIPFILEDIR ' + zipfilename
-    subprocess.call(command,shell=True)
+    subprocess.run(command,shell=True, capture_output=True)
     #########################
     print("Unzip -d complete")
     command = 'find /ZIPFILEDIR -type f'
-    subprocess.call(command,shell=True)
+    subprocess.run(command,shell=True, capture_output=True)
     ######################
 
     command = 'cp  /ZIPFILEDIR/*/*/*/*/*/*/*.dcm  /DICOMFILEDIR/ '
-    subprocess.call(command,shell=True)
+    subprocess.run(command,shell=True, capture_output=True)
+    subprocess.run('ls -l /DICOMFILEDIR',shell=True, capture_output=True)
     #     #################################################################
     sessionDir='/DICOMFILEDIR'
 
