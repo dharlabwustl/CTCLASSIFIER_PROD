@@ -30,14 +30,14 @@ def get_metadata_session(sessionId):
 def get_dicom_from_filesystem(sessionId, scanId,xnatSession):
     # Handle DICOM files that are not stored in a directory matching their XNAT scanId
     print("No DICOM found in %s directory, querying XNAT for DICOM path" % scanId)
-    url = ("/data/experiments/%s/scans/%s/files?format=json&locator=absolutePath&file_format=DICOM" % 
-        (sessionId, scanId))
+    url = ("/data/experiments/%s/scans/%s/files?format=json&locator=absolutePath&file_format=DICOM" %
+           (sessionId, scanId))
     xnatSession.renew_httpsession()
     response = xnatSession.httpsess.get(xnatSession.host + url)
     if response.status_code != 200:
-        raise Exception("Error querying XNAT for %s DICOM files: %s %s %s" % (scanId, 
-                                                                              response.status_code, 
-                                                                              response.reason, 
+        raise Exception("Error querying XNAT for %s DICOM files: %s %s %s" % (scanId,
+                                                                              response.status_code,
+                                                                              response.reason,
                                                                               response.text))
     result = response.json()['ResultSet']['Result']
     # print(result[0]) #['absolutePath'])
@@ -48,7 +48,7 @@ def get_dicom_from_filesystem(sessionId, scanId,xnatSession):
 
     # Get 70% file and ensure it exists
     selDicomAbs = result[get_slice_idx(nDicomFiles)]['absolutePath']
-###########################################################################
+    ###########################################################################
     scanDir='/input'
     # if not os.path.isdir(scanDir):
     #     continue
@@ -69,8 +69,9 @@ def get_dicom_from_filesystem(sessionId, scanId,xnatSession):
 
 def get_dicom_using_xnat(sessionId, scanId,xnatSession):
     # xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
-    url = ("/data/experiments/%s/scans/%s/files?format=json&locator=absolutePath&file_format=DICOM" % 
-        (sessionId,scanId ))
+    url = ("/data/experiments/%s/scans/%s/files?format=json&locator=absolutePath&file_format=DICOM" %
+           (sessionId,scanId ))
+    print(url)
     xnatSession.renew_httpsession()
     response = xnatSession.httpsess.get(xnatSession.host + url)
 
@@ -79,16 +80,17 @@ def get_dicom_using_xnat(sessionId, scanId,xnatSession):
     if nDicomFiles == 0:
         raise Exception("No DICOM files for %s stored in XNAT" % scanId)
 
-#     # Get 70% file and ensure it exists
+    #     # Get 70% file and ensure it exists
     selDicomAbs = result[get_slice_idx(nDicomFiles)]['absolutePath']
     print(selDicomAbs)
-#     # selDicomAbs_split=selDicomAbs.split('/')
-#     # print(selDicomAbs_split[-5]+'_'+selDicomAbs_split[-3])
-#     ######################################################################################
+    #     # selDicomAbs_split=selDicomAbs.split('/')
+    #     # print(selDicomAbs_split[-5]+'_'+selDicomAbs_split[-3])
+    #     ######################################################################################
 
-#     # print("No DICOM found in %s directory, querying XNAT for DICOM path" % scanId)
-    url = ("/data/experiments/%s/scans/%s/resources/DICOM/files?format=zip" % 
-        (sessionId, scanId))
+    #     # print("No DICOM found in %s directory, querying XNAT for DICOM path" % scanId)
+    url = ("/data/experiments/%s/scans/%s/resources/DICOM/files?format=zip" %
+           (sessionId, scanId))
+    print(url)
 
     xnatSession.renew_httpsession()
     response = xnatSession.httpsess.get(xnatSession.host + url)
@@ -102,18 +104,18 @@ def get_dicom_using_xnat(sessionId, scanId,xnatSession):
 
     command = 'cp  /ZIPFILEDIR/*/*/*/*/*/*/*.dcm  /DICOMFILEDIR/ '
     subprocess.call(command,shell=True)
-#     #################################################################
+    #     #################################################################
     sessionDir='/DICOMFILEDIR'
 
     selDicomAbs = result[get_slice_idx(nDicomFiles)]['absolutePath']
-# #/ZIPFILEDIR/BJH_011_13102019_0715/*/*/*/*/**
+    # #/ZIPFILEDIR/BJH_011_13102019_0715/*/*/*/*/**
     selDicom=os.path.join(sessionDir,os.path.basename(selDicomAbs))
-    print(selDicom) 
+    print(selDicom)
     return selDicom, nDicomFiles
 
 
 def run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession):
-# def run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSesDir, xnatSession):
+    # def run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSesDir, xnatSession):
     print("Classifying scan %s" % scanId)
     # Select DICOM file for scanId (70% thru the brain)
     selDicom, nDicomFiles = get_dicom_using_xnat(sessionId, scanId,xnatSession) #, sessionDir, xnatSesDir, xnatSession)
@@ -127,7 +129,7 @@ def run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession):
     label = label_probability.classify(selDicomDecompr, jpgDir, scanId, nDicomFiles)
     print("Scan classification for %s scan %s is '%s'" % (sessionId, scanId, label))
     # Change value of series_class in XNAT
-    # url = ("/data/experiments/%s/scans/%s?xsiType=xnat:mrScanData&xnat:imageScanData/series_class=%s" % 
+    # url = ("/data/experiments/%s/scans/%s?xsiType=xnat:mrScanData&xnat:imageScanData/series_class=%s" %
     #     (sessionId, scanId, label))
     url = ("/data/experiments/%s/scans/%s?xsiType=xnat:ctScanData&type=%s" % (sessionId, scanId, label))
     # xnatSession.renew_httpsession()
@@ -139,11 +141,11 @@ def run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession):
         if response.status_code == 403 or response.status_code == 404:
             errStr = "PERMISSION DENIED"
         raise Exception("%s attempting to set type for %s %s to '%s': %s" %
-            (errStr, sessionId, scanId, label, response.text))
+                        (errStr, sessionId, scanId, label, response.text))
 
 
 if __name__ == '__main__':
-    
+
     sessionDir = sys.argv[1]
     workingDir = sys.argv[2]
     sessionId = sys.argv[3]
@@ -189,4 +191,4 @@ if __name__ == '__main__':
             xnatSession.close_httpsession()
         except Exception as e: # work on python 3.x
             print('Exception occured: '+ str(e))
-            continue 
+            continue
