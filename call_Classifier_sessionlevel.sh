@@ -41,6 +41,16 @@ function wait_for_file() {
 # cp /mounted_directory/Classifier_wholeSession.py /run/Classifier_wholeSession.py
  cd /run/
  echo $PWD
+date
+python --version
+whoami
+ls -la /run
+ls -la /input
+ls -la /working
+ls -la /ZIPFILEDIR
+ls -la /
+df -h
+
 echo python /software1/Classifier_session_level.py /input /working ${sessionId}  #${scanID}
 python /software1/Classifier_session_level.py /input /working ${sessionId}  #${scanID}
 
