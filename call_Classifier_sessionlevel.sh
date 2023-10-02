@@ -43,12 +43,19 @@ function wait_for_file() {
  echo $PWD
 date
 python --version
-whoami
-ls -la /run
-ls -la /input
-ls -la /working
-ls -la /ZIPFILEDIR
-ls -la /
+echo `whoami`
+echo `id -u`
+echo `groups`
+echo ls -la /run
+     ls -la /run
+echo ls -la /input
+     ls -la /input
+echo ls -la /working
+     ls -la /working
+echo ls -la /ZIPFILEDIR
+     ls -la /ZIPFILEDIR
+echo ls -la /
+     ls -la /
 df -h
 
 echo python /software1/Classifier_session_level.py /input /working ${sessionId}  #${scanID}
