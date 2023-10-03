@@ -60,6 +60,8 @@ df -h
 
 echo python /software1/Classifier_session_level.py /input /working ${sessionId}  #${scanID}
 python /software1/Classifier_session_level.py /input /working ${sessionId}  #${scanID}
+echo cat /tmp/log.txt
+     cat /tmp/log.txt
 
 #output_directory=/output/
 #filename=${output_directory}/${sessionId}.csv
