@@ -94,10 +94,12 @@ def get_dicom_using_xnat(sessionId, scanId,xnatSession):
 
     xnatSession.renew_httpsession()
     response = xnatSession.httpsess.get(xnatSession.host + url)
-    zipfilename=sessionId+scanId+'.zip'
+    zipfilename='/ZIPFILEDIR/' + sessionId + scanId + '.zip'
     #############################
     print(zipfilename)
     print('/ZIPFILEDIR')
+    subprocess.call("echo '' >> /tmp/log.txt",shell=True)
+    subprocess.call("echo Starting new run >> /tmp/log.txt",shell=True)
     subprocess.call("pwd >> /tmp/log.txt",shell=True)
     subprocess.call("ls -la >> /tmp/log.txt",shell=True)
     subprocess.call("whoami >> /tmp/log.txt",shell=True)
@@ -112,19 +114,19 @@ def get_dicom_using_xnat(sessionId, scanId,xnatSession):
                 f.write(chunk)
     ############################
     print("Zip file stored")
-    subprocess.call("ls -la >> /tmp/log.txt",shell=True)
+    subprocess.call("ls -la /ZIPFILEDIR >> /tmp/log.txt",shell=True)
     #####################
     command = 'unzip -d /ZIPFILEDIR ' + zipfilename
     subprocess.call(command,shell=True)
     #########################
     print("Unzip -d complete")
-    command = 'find /ZIPFILEDIR -type f'
+    command = 'find /ZIPFILEDIR -type f >> /tmp/log.txt'
     subprocess.call(command,shell=True)
     ######################
 
     command = 'cp  /ZIPFILEDIR/*/*/*/*/*/*/*.dcm  /DICOMFILEDIR/ '
     subprocess.call(command,shell=True)
-    subprocess.call('ls -l /DICOMFILEDIR',shell=True)
+    subprocess.call('ls -la /DICOMFILEDIR >> /tmp/log.txt',shell=True)
     #     #################################################################
     sessionDir='/DICOMFILEDIR'
 
