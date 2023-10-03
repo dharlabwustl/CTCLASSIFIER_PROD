@@ -41,7 +41,6 @@ class XnatSession():
         # Set up request session and get cookie
         if self.lastrenew is None or ((self.lastrenew + self.sessiontimeout) < datetime.datetime.now()):
             self.logger.debug('[SESSION] Renewing XNAT session as %s from %s' % (self.username, self.host))
-            self.logger.debug('MD5 of password %s', hashlib.md5(self.password.encode('utf-8')).hexdigest())
             # Delete old session if exists
             print("I AM HERE")
             try:

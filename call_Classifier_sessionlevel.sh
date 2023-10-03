@@ -43,9 +43,9 @@ function wait_for_file() {
  echo $PWD
 date
 python --version
-echo `whoami`
-echo `id -u`
-echo `groups`
+echo whoami: `whoami`
+echo id -u: `id -u`
+echo groups: `groups`
 echo ls -la /run
      ls -la /run
 echo ls -la /input
