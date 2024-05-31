@@ -48,7 +48,7 @@ count=0
 
     # echo SESSION_NAME::${SESSION_NAME}
     directory_to_create_destroy
-    /software/call_Classifier_sessionlevel.sh $SESSION_ID $XNAT_USER $XNAT_PASS $XNAT_HOST 
+    /software1/call_Classifier_sessionlevel.sh $SESSION_ID $XNAT_USER $XNAT_PASS $XNAT_HOST 
     # echo snipr_step::${snipr_step}
     # scan_selection ${SESSION_ID}  
 
