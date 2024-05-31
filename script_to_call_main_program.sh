@@ -25,3 +25,9 @@ then
 /software1/call_Classifier_sessionlevel_SAH.sh ${SESSION_ID} $XNAT_USER $XNAT_PASS ${4}
 fi
 
+#########################
+if [[ ${TYPE_OF_PROGRAM} == 'PROJECT_LEVEL_SCAN_CLASSIFIER' ]] ;
+then
+/software1/project_level_classifier.sh ${SESSION_ID} $XNAT_USER $XNAT_PASS ${4}
+fi
+
