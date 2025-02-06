@@ -42,7 +42,7 @@ function wait_for_file() {
  cd /run/
  echo $PWD
 echo python /software1/Classifier_session_level.py /input /working ${sessionId}  #${scanID}
-python /software1/Classifier_session_level.py /input /working ${sessionId}  #${scanID}
+python /software1/Classifier_session_levelFeb062025.py /input /working ${sessionId}  #${scanID}
 
 #output_directory=/output/
 #filename=${output_directory}/${sessionId}.csv
