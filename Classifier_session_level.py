@@ -11,7 +11,7 @@ from xnatSession import XnatSession
 import DecompressDCM
 import label_probability
 # Prep XNAT session
-XNAT_HOST = 'https://snipr.wustl.edu' #os.environ['XNAT_HOST']#
+XNAT_HOST ='http://snipr02.nrg.wustl.edu:8080' # 'https://snipr.wustl.edu' #os.environ['XNAT_HOST']#
 XNAT_USER = os.environ['XNAT_USER']
 XNAT_PASS = os.environ['XNAT_PASS']
 catalogXmlRegex = re.compile(r'.*\.xml$')
@@ -94,14 +94,18 @@ def get_dicom_using_xnat(sessionId, scanId,xnatSession):
 
     xnatSession.renew_httpsession()
     response = xnatSession.httpsess.get(xnatSession.host + url)
-    zipfilename=sessionId+scanId+'.zip'
+    zipfilename='/ZIPFILEDIR/' + sessionId + scanId + '.zip'
     #############################
     print(zipfilename)
     print('/ZIPFILEDIR')
-    subprocess.run("pwd",shell=True, capture_output=True)
-    subprocess.run("ls -la",shell=True, capture_output=True)
-    subprocess.run("whoami",shell=True, capture_output=True)
-    subprocess.run('ls -la /ZIPFILEDIR',shell=True, capture_output=True)
+    subprocess.call("echo '' >> /tmp/log.txt",shell=True)
+    subprocess.call("echo Starting new run >> /tmp/log.txt",shell=True)
+    subprocess.call("pwd >> /tmp/log.txt",shell=True)
+    subprocess.call("ls -la >> /tmp/log.txt",shell=True)
+    subprocess.call("whoami >> /tmp/log.txt",shell=True)
+    subprocess.call("id -u >> /tmp/log.txt",shell=True)
+    subprocess.call('ls -la /ZIPFILEDIR >> /tmp/log.txt',shell=True)
+    subprocess.call('echo about to open zip file >> /tmp/log.txt',shell=True)
     ###############################
     with open(zipfilename, "wb") as f:
         print("Zip file opened")
@@ -110,19 +114,19 @@ def get_dicom_using_xnat(sessionId, scanId,xnatSession):
                 f.write(chunk)
     ############################
     print("Zip file stored")
-    subprocess.run("ls -la",shell=True, capture_output=True)
+    subprocess.call("ls -la /ZIPFILEDIR >> /tmp/log.txt",shell=True)
     #####################
     command = 'unzip -d /ZIPFILEDIR ' + zipfilename
-    subprocess.run(command,shell=True, capture_output=True)
+    subprocess.call(command,shell=True)
     #########################
     print("Unzip -d complete")
-    command = 'find /ZIPFILEDIR -type f'
-    subprocess.run(command,shell=True, capture_output=True)
+    command = 'find /ZIPFILEDIR -type f >> /tmp/log.txt'
+    subprocess.call(command,shell=True)
     ######################
 
     command = 'cp  /ZIPFILEDIR/*/*/*/*/*/*/*.dcm  /DICOMFILEDIR/ '
-    subprocess.run(command,shell=True, capture_output=True)
-    subprocess.run('ls -l /DICOMFILEDIR',shell=True, capture_output=True)
+    subprocess.call(command,shell=True)
+    subprocess.call('ls -la /DICOMFILEDIR >> /tmp/log.txt',shell=True)
     #     #################################################################
     sessionDir='/DICOMFILEDIR'
 

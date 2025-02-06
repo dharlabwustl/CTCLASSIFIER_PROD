@@ -41,8 +41,27 @@ function wait_for_file() {
 # cp /mounted_directory/Classifier_wholeSession.py /run/Classifier_wholeSession.py
  cd /run/
  echo $PWD
+date
+python --version
+echo whoami: `whoami`
+echo id -u: `id -u`
+echo groups: `groups`
+echo ls -la /run
+     ls -la /run
+echo ls -la /input
+     ls -la /input
+echo ls -la /working
+     ls -la /working
+echo ls -la /ZIPFILEDIR
+     ls -la /ZIPFILEDIR
+echo ls -la /
+     ls -la /
+df -h
+
 echo python /software1/Classifier_session_level.py /input /working ${sessionId}  #${scanID}
 python /software1/Classifier_session_level.py /input /working ${sessionId}  #${scanID}
+echo cat /tmp/log.txt
+     cat /tmp/log.txt
 
 #output_directory=/output/
 #filename=${output_directory}/${sessionId}.csv
