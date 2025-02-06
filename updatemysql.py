@@ -15,6 +15,7 @@ def connect_to_database():
     # Pool of random IP addresses
     ip_pool = [
         "127.0.0.1",
+        "10.39.217.11",
         "192.168.1.100",  # Replace with your database server IPs
         "192.168.1.101",
         "203.0.113.50",
