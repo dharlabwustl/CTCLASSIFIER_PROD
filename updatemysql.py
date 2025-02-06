@@ -28,10 +28,14 @@ def connect_to_database():
     try:
         # Establish connection
         connection = mysql.connector.connect(
-            host='10.39.217.11', ###'128.252.210.4', ##'10.39.217.11', #random_ip,  # Use the randomly selected IP
-            user="root",  # Replace with your username
-            password="ircadircad",  # Replace with your password
-            database="snipr_results"  # Replace with your database name
+            # host='10.39.217.11', ###'128.252.210.4', ##'10.39.217.11', #random_ip,  # Use the randomly selected IP
+            # user="root",  # Replace with your username
+            # password="ircadircad",  # Replace with your password
+            # database="snipr_results"  # Replace with your database name
+            host = "10.39.217.11" ,  # Replace with your MySQL server's IP
+            user = "snipr"  ,       # MySQL username
+            password = "Snipr1!@#" ,# MySQL password
+            database = "test"   # Database name
         )
         print(f"Connected to database at {random_ip}")
         return connection
