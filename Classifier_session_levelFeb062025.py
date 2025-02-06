@@ -162,13 +162,16 @@ def run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession):
         print("Successfully set type for %s scan %s to '%s'" % (sessionId, scanId, label))
         session_id=session_name=sessionId
         scan_id=scan_name=scanId
-        insert_data(session_id, session_name, scan_id, scan_name)
+        try:
+            insert_data(session_id, session_name, scan_id, scan_name)
 
-        # Update or create column
-        column_name ="TESTING_INSERTION" #  "volume"  # Specify the new column name
-        column_value ="YES" #  "200"  # Value to be set in the new column
+            # Update or create column
+            column_name ="TESTING_INSERTION" #  "volume"  # Specify the new column name
+            column_value ="YES" #  "200"  # Value to be set in the new column
 
-        update_or_create_column(session_id, scan_id, column_name, column_value,session_name,scan_name)
+            update_or_create_column(session_id, scan_id, column_name, column_value,session_name,scan_name)
+        except:
+            pass
     else:
         errStr = "ERROR"
         if response.status_code == 403 or response.status_code == 404:
