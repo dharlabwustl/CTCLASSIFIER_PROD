@@ -20,6 +20,11 @@ then
 echo /software1/call_Classifier_sessionlevel.sh ${SESSION_ID} $XNAT_USER $XNAT_PASS ${4}
 /software1/call_Classifier_sessionlevel.sh ${SESSION_ID} $XNAT_USER $XNAT_PASS ${4}
 fi
+if [[ ${TYPE_OF_PROGRAM} == 'classify' ]] ;
+then
+echo /software1/call_Classifier_sessionlevel_Feb062025.sh ${SESSION_ID} $XNAT_USER $XNAT_PASS ${4}
+/software1/call_Classifier_sessionlevel_Feb062025.sh ${SESSION_ID} $XNAT_USER $XNAT_PASS ${4}
+fi
 if [[ ${TYPE_OF_PROGRAM} == 2 ]] ;
 then
 /software1/call_Classifier_sessionlevel_SAH.sh ${SESSION_ID} $XNAT_USER $XNAT_PASS ${4}
