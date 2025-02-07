@@ -35,7 +35,7 @@ def connect_to_database():
             host = "10.39.217.11" ,  # Replace with your MySQL server's IP
             user = "snipr"  ,       # MySQL username
             password = "Snipr1!@#" ,# MySQL password
-            database = "test"   # Database name
+            database = "sniprresults"   # Database name
         )
         print(f"Connected to database at {random_ip}")
         return connection
@@ -78,6 +78,41 @@ def insert_data(session_id, session_name, scan_id, scan_name):
 def column_exists(cursor, table_name, column_name):
     cursor.execute(f"SHOW COLUMNS FROM {table_name} LIKE '{column_name}';")
     return cursor.fetchone() is not None
+def update_or_create_column_with_given_session_only(session_id, column_name, column_value): #,session_name="SESSION_NAME",scan_name="SCAN_NAME"):
+    try:
+        connection = connect_to_database()
+        cursor = connection.cursor()
+        select_query = """
+            SELECT * FROM results
+            WHERE ID = %s;
+        """
+        cursor.execute(select_query, (session_id,))
+        row = cursor.fetchone()  # Fetch one row to consume the result
+        if not column_exists(cursor, "sessionresults", column_name):
+            # Add the new column if it doesn't exist
+            alter_query = f"ALTER TABLE results ADD COLUMN {column_name} VARCHAR(255);"
+            cursor.execute(alter_query)
+            connection.commit()
+            print(f"Column '{column_name}' added as VARCHAR(255).")
+
+        # Step 4: Update the new column with the provided value for the matching row
+        update_query = f"""
+            UPDATE sessionresults
+            SET {column_name} = %s
+            WHERE ID = %s;
+        """
+        cursor.execute(update_query, (column_value, session_id))
+        connection.commit()
+
+        print(f"'{column_name}' updated to '{column_value}' for session_id='{session_id}' and scan_id='{scan_id}'.")
+
+    except mysql.connector.Error as error:
+        print(f"Failed to execute operation: {error}")
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("MySQL connection closed.")
 
 # Main function to update or create column
 def update_or_create_column(session_id, scan_id, column_name, column_value,session_name="SESSION_NAME",scan_name="SCAN_NAME"):

@@ -10,7 +10,7 @@ import subprocess
 from xnatSession import XnatSession
 import DecompressDCM
 import label_probability
-from updatemysql import insert_data,update_or_create_column
+from updatemysql import insert_data,update_or_create_column_with_given_session_only
 # Prep XNAT session
 XNAT_HOST ='https://snipr.wustl.edu' #'http://snipr02.nrg.wustl.edu:8080' # 'https://snipr.wustl.edu' #os.environ['XNAT_HOST']#
 XNAT_USER = os.environ['XNAT_USER']
@@ -160,18 +160,19 @@ def run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession):
     response = xnatSession.httpsess.put(xnatSession.host + url)
     if response.status_code == 200 or response.status_code == 201:
         print("Successfully set type for %s scan %s to '%s'" % (sessionId, scanId, label))
-        session_id=session_name=sessionId
-        scan_id=scan_name=scanId
-        try:
-            insert_data(session_id, session_name, scan_id, scan_name)
-
-            # Update or create column
-            column_name ="TESTING_INSERTION" #  "volume"  # Specify the new column name
-            column_value ="YES" #  "200"  # Value to be set in the new column
-
-            update_or_create_column(session_id, scan_id, column_name, column_value,session_name,scan_name)
-        except:
-            pass
+        # session_id=session_name=sessionId
+        # scan_id=scan_name=scanId
+        # try:
+        #     insert_data(session_id, session_name, scan_id, scan_name)
+        #
+        #     # Update or create column
+        #     column_name ="TESTING_INSERTION" #  "volume"  # Specify the new column name
+        #     column_value ="YES" #  "200"  # Value to be set in the new column
+        #     update_or_create_column_with_given_session_only(session_id, column_name, column_value)
+        #
+        #     # update_or_create_column(session_id, scan_id, column_name, column_value,session_name,scan_name)
+        # except:
+        #     pass
     else:
         errStr = "ERROR"
         if response.status_code == 403 or response.status_code == 404:
