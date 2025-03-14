@@ -13,7 +13,7 @@ from xnatSession import XnatSession
 import DecompressDCM,time
 import label_probability
 # Prep XNAT session
-XNAT_HOST = 'https://snipr.wustl.edu' #os.environ['XNAT_HOST']#
+XNAT_HOST =os.environ['XNAT_HOST'] # 'https://snipr.wustl.edu' #os.environ['XNAT_HOST']#
 XNAT_USER = os.environ['XNAT_USER']
 XNAT_PASS = os.environ['XNAT_PASS']
 catalogXmlRegex = re.compile(r'.*\.xml$')
