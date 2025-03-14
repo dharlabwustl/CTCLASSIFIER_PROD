@@ -24,7 +24,7 @@ def get_metadata_session(sessionId):
     #xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
     #xnatSession.renew_httpsession()
     response = xnatSession.httpsess.get(xnatSession.host + url)
-    xnatSession.close_httpsession()
+    #xnatSession.close_httpsession()
     metadata_session=response.json()['ResultSet']['Result']
     return metadata_session
 
@@ -198,7 +198,7 @@ if __name__ == '__main__':
             #xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
             run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession)
             # Handle DICOM files that are not stored in a directory matching their XNAT scanId
-            xnatSession.close_httpsession()
+            #xnatSession.close_httpsession()
         except Exception as e: # work on python 3.x
             print('Exception occured: '+ str(e))
             continue 
