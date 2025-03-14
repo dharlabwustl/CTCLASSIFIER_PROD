@@ -12,7 +12,7 @@ import DecompressDCM
 import label_probability
 from updatemysql import insert_data,update_or_create_column_with_given_session_only
 # Prep XNAT session
-XNAT_HOST ='https://snipr.wustl.edu' #'http://snipr02.nrg.wustl.edu:8080' # 'https://snipr.wustl.edu' #os.environ['XNAT_HOST']#
+XNAT_HOST =os.environ['XNAT_HOST'] #'https://snipr.wustl.edu' #'http://snipr02.nrg.wustl.edu:8080' # 'https://snipr.wustl.edu' #os.environ['XNAT_HOST']#
 XNAT_USER = os.environ['XNAT_USER']
 XNAT_PASS = os.environ['XNAT_PASS']
 catalogXmlRegex = re.compile(r'.*\.xml$')
