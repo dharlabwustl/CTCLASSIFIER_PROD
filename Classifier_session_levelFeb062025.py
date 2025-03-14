@@ -22,7 +22,7 @@ def get_slice_idx(nDicomFiles):
 def get_metadata_session(sessionId):
     url = ("/data/experiments/%s/scans/?format=json" %    (sessionId))
     #xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
-    #xnatSession.renew_httpsession()
+    ##xnatSession.close_httpsession()
     response = xnatSession.httpsess.get(xnatSession.host + url)
     xnatSession.close_httpsession()
     metadata_session=response.json()['ResultSet']['Result']
@@ -33,7 +33,7 @@ def get_dicom_from_filesystem(sessionId, scanId,xnatSession):
     print("No DICOM found in %s directory, querying XNAT for DICOM path" % scanId)
     url = ("/data/experiments/%s/scans/%s/files?format=json&locator=absolutePath&file_format=DICOM" %
            (sessionId, scanId))
-    #xnatSession.renew_httpsession()
+    ##xnatSession.close_httpsession()
     response = xnatSession.httpsess.get(xnatSession.host + url)
     if response.status_code != 200:
         raise Exception("Error querying XNAT for %s DICOM files: %s %s %s" % (scanId,
@@ -73,7 +73,7 @@ def get_dicom_using_xnat(sessionId, scanId,xnatSession):
     url = ("/data/experiments/%s/scans/%s/files?format=json&locator=absolutePath&file_format=DICOM" %
            (sessionId,scanId ))
     print(url)
-    #xnatSession.renew_httpsession()
+    ##xnatSession.close_httpsession()
     response = xnatSession.httpsess.get(xnatSession.host + url)
 
     result = response.json()['ResultSet']['Result']
@@ -93,7 +93,7 @@ def get_dicom_using_xnat(sessionId, scanId,xnatSession):
            (sessionId, scanId))
     print(url)
 
-    #xnatSession.renew_httpsession()
+    ##xnatSession.close_httpsession()
     response = xnatSession.httpsess.get(xnatSession.host + url)
     zipfilename='/ZIPFILEDIR/' + sessionId + scanId + '.zip'
     #############################
@@ -156,7 +156,7 @@ def run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession):
     # url = ("/data/experiments/%s/scans/%s?xsiType=xnat:mrScanData&xnat:imageScanData/series_class=%s" %
     #     (sessionId, scanId, label))
     url = ("/data/experiments/%s/scans/%s?xsiType=xnat:ctScanData&type=%s" % (sessionId, scanId, label))
-    # #xnatSession.renew_httpsession()
+    # ##xnatSession.close_httpsession()
     response = xnatSession.httpsess.put(xnatSession.host + url)
     if response.status_code == 200 or response.status_code == 201:
         print("Successfully set type for %s scan %s to '%s'" % (sessionId, scanId, label))
