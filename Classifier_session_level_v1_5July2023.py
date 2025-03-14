@@ -18,6 +18,7 @@ XNAT_USER = os.environ['XNAT_USER']
 XNAT_PASS = os.environ['XNAT_PASS']
 catalogXmlRegex = re.compile(r'.*\.xml$')
 xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
+xnatSession.renew_httpsession()
 def wait_for_file_tobe_written(file_path,time_to_wait=10):
     # time_to_wait = 10
     time_counter = 0
@@ -32,7 +33,7 @@ def get_slice_idx(nDicomFiles):
 def get_metadata_session(sessionId):
     url = ("/data/experiments/%s/scans/?format=json" %    (sessionId))
     #xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
-    xnatSession.renew_httpsession()
+    #xnatSession.renew_httpsession()
     response = xnatSession.httpsess.get(xnatSession.host + url)
     #xnatSession.close_httpsession()
     metadata_session=response.json()['ResultSet']['Result']
@@ -45,7 +46,7 @@ def call_get_metadata_session_saveascsv(args):
 def get_metadata_session_saveascsv(sessionId,filename):
     url = ("/data/experiments/%s/scans/?format=json" %    (sessionId))
     #xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
-    xnatSession.renew_httpsession()
+    #xnatSession.renew_httpsession()
     response = xnatSession.httpsess.get(xnatSession.host + url)
     #xnatSession.close_httpsession()
     metadata_session=response.json()['ResultSet']['Result']
@@ -58,7 +59,7 @@ def get_dicom_from_filesystem(sessionId, scanId,xnatSession):
     print("No DICOM found in %s directory, querying XNAT for DICOM path" % scanId)
     url = ("/data/experiments/%s/scans/%s/files?format=json&locator=absolutePath&file_format=DICOM" % 
         (sessionId, scanId))
-    xnatSession.renew_httpsession()
+    #xnatSession.renew_httpsession()
     response = xnatSession.httpsess.get(xnatSession.host + url)
     if response.status_code != 200:
         raise Exception("Error querying XNAT for %s DICOM files: %s %s %s" % (scanId, 
@@ -98,7 +99,7 @@ def get_dicom_using_xnat(sessionId, scanId,xnatSession):
     # #xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
     url = ("/data/experiments/%s/scans/%s/files?format=json&locator=absolutePath&file_format=DICOM" % 
         (sessionId,scanId ))
-    xnatSession.renew_httpsession()
+    #xnatSession.renew_httpsession()
     response = xnatSession.httpsess.get(xnatSession.host + url)
 
     result = response.json()['ResultSet']['Result']
@@ -122,7 +123,7 @@ def get_dicom_using_xnat(sessionId, scanId,xnatSession):
     url = ("/data/experiments/%s/scans/%s/resources/DICOM/files?format=zip" % 
         (sessionId, scanId))
 
-    xnatSession.renew_httpsession()
+    #xnatSession.renew_httpsession()
     response = xnatSession.httpsess.get(xnatSession.host + url)
     zipfilename=sessionId+scanId+'.zip'
     with open(zipfilename, "wb") as f:
@@ -151,7 +152,7 @@ def get_dicom_using_xnat_10_July_2023(sessionId, scanId,xnatSession,sessionDir='
         #xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
         url = ("/data/experiments/%s/scans/%s/files?format=json&locator=absolutePath&file_format=DICOM" %
                (sessionId,scanId ))
-        xnatSession.renew_httpsession()
+        #xnatSession.renew_httpsession()
         response = xnatSession.httpsess.get(xnatSession.host + url)
 
         result = response.json()['ResultSet']['Result']
@@ -227,7 +228,7 @@ def get_resourcefiles_metadata_saveascsv(URI,resource_dir,dir_to_receive_the_dat
     url = (URI+'/resources/' + resource_dir +'/files?format=json')
     # print("url::{}".format(url))
     #xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
-    xnatSession.renew_httpsession()
+    #xnatSession.renew_httpsession()
     response = xnatSession.httpsess.get(xnatSession.host + url)
     #xnatSession.close_httpsession()
     metadata_masks=response.json()['ResultSet']['Result']
@@ -249,7 +250,7 @@ def run_classifier_7July_2023(sessionDir, rawDir, jpgDir, sessionId, scanId, xna
         label = label_probability.classify(selDicomDecompr, jpgDir, scanId, nDicomFiles)
         print("Scan classification for %s scan %s is '%s'" % (sessionId, scanId, label))
         url = ("/data/experiments/%s/scans/%s?xsiType=xnat:ctScanData&type=%s" % (sessionId, scanId, label))
-        # xnatSession.renew_httpsession()
+        # #xnatSession.renew_httpsession()
         response = xnatSession.httpsess.put(xnatSession.host + url)
         if response.status_code == 200 or response.status_code == 201:
             print("Successfully set series_class for %s scan %s to '%s'" % (sessionId, scanId, label))
@@ -297,7 +298,7 @@ def call_sort_dicom_list(args):
 def download_a_singlefile_with_URIString(url,filename,dir_to_save):
     print("url::{}::filename::{}::dir_to_save::{}".format(url,filename,dir_to_save))
     #xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
-    xnatSession.renew_httpsession()
+    #xnatSession.renew_httpsession()
     # command="echo  " + url['URI'] + " >> " +  os.path.join(dir_to_save,"test.csv")
     # subprocess.call(command,shell=True)
     response = xnatSession.httpsess.get(xnatSession.host +url) #/data/projects/ICH/resources/179772/files/ICH_CTSESSIONS_202305170753.csv") #
@@ -329,7 +330,7 @@ def run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession):
     # url = ("/data/experiments/%s/scans/%s?xsiType=xnat:mrScanData&xnat:imageScanData/series_class=%s" % 
     #     (sessionId, scanId, label))
     url = ("/data/experiments/%s/scans/%s?xsiType=xnat:ctScanData&type=%s" % (sessionId, scanId, label))
-    # xnatSession.renew_httpsession()
+    # #xnatSession.renew_httpsession()
     response = xnatSession.httpsess.put(xnatSession.host + url)
     if response.status_code == 200 or response.status_code == 201:
         print("Successfully set series_class for %s scan %s to '%s'" % (sessionId, scanId, label))
