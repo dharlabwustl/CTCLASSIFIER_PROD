@@ -70,26 +70,27 @@ def get_dicom_from_filesystem(sessionId, scanId,xnatSession):
     raise Exception("No DICOM files found for %s" % scanId)
 
 def get_dicom_using_xnat(sessionId, scanId,xnatSession):
-    # #xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
-    url = ("/data/experiments/%s/scans/%s/files?format=json&locator=absolutePath&file_format=DICOM" %
-           (sessionId,scanId ))
-    print(url)
-    #xnatSession.renew_httpsession()
-    response = xnatSession.httpsess.get(xnatSession.host + url)
-
-    result = response.json()['ResultSet']['Result']
-    nDicomFiles = len(result)
-    if nDicomFiles == 0:
-        raise Exception("No DICOM files for %s stored in XNAT" % scanId)
-
-    #     # Get 70% file and ensure it exists
-    selDicomAbs = result[get_slice_idx(nDicomFiles)]['absolutePath']
-    print(selDicomAbs)
-    #     # selDicomAbs_split=selDicomAbs.split('/')
-    #     # print(selDicomAbs_split[-5]+'_'+selDicomAbs_split[-3])
-    #     ######################################################################################
-
-    #     # print("No DICOM found in %s directory, querying XNAT for DICOM path" % scanId)
+    # # #xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
+    #
+    # url = ("/data/experiments/%s/scans/%s/files?format=json&locator=absolutePath&file_format=DICOM" %
+    #        (sessionId,scanId ))
+    # print(url)
+    # #xnatSession.renew_httpsession()
+    # response = xnatSession.httpsess.get(xnatSession.host + url)
+    #
+    # result = response.json()['ResultSet']['Result']
+    # nDicomFiles = len(result)
+    # if nDicomFiles == 0:
+    #     raise Exception("No DICOM files for %s stored in XNAT" % scanId)
+    #
+    # #     # Get 70% file and ensure it exists
+    # selDicomAbs = result[get_slice_idx(nDicomFiles)]['absolutePath']
+    # print(selDicomAbs)
+    # #     # selDicomAbs_split=selDicomAbs.split('/')
+    # #     # print(selDicomAbs_split[-5]+'_'+selDicomAbs_split[-3])
+    # #     ######################################################################################
+    #
+    # #     # print("No DICOM found in %s directory, querying XNAT for DICOM path" % scanId)
     url = ("/data/experiments/%s/scans/%s/resources/DICOM/files?format=zip" %
            (sessionId, scanId))
     print(url)
