@@ -1,9 +1,10 @@
 #!/usr/bin/python
 
 import os, sys, errno, shutil, uuid
-import math
+import math,json
 import glob
 import re
+import pandas as pd
 import requests
 import pydicom as dicom
 import subprocess
@@ -68,23 +69,34 @@ def get_dicom_from_filesystem(sessionId, scanId,xnatSession):
             # Skip, not a dicom
             pass
     raise Exception("No DICOM files found for %s" % scanId)
-
+def get_resourcefiles_metadata(URI,resource_dir):
+    url = (URI+'/resources/' + resource_dir +'/files?format=json')
+    print(url)
+    #xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
+    #xnatSession.renew_httpsession()
+    response = xnatSession.httpsess.get(xnatSession.host + url)
+    #xnatSession.close_httpsession())
+    metadata_masks=response.json()['ResultSet']['Result']
+    return metadata_masks
 def get_dicom_using_xnat(sessionId, scanId,xnatSession):
     # #xnatSession = XnatSession(username=XNAT_USER, password=XNAT_PASS, host=XNAT_HOST)
 
-    url = ("/data/experiments/%s/scans/%s/resources/DICOM/files?format=json&locator=absolutePath&file_format=DICOM" %
-           (sessionId,scanId ))
-    print(url)
-    #xnatSession.renew_httpsession()
-    response = xnatSession.httpsess.get(xnatSession.host + url)
-
-    result = response.json()['ResultSet']['Result']
-    nDicomFiles = len(result)
+    scan_URI=f'/data/experiments/{sessionId}/scans/{scanId}'
+    dicomfolder_metadata=get_resourcefiles_metadata(scan_URI,'DICOM')
+    dicomfolder_metadata_df = pd.read_json(json.dumps(dicomfolder_metadata))
+    # url = ("/data/experiments/%s/scans/%s/resources/DICOM/files?format=json&locator=absolutePath&file_format=DICOM" %
+    #        (sessionId,scanId ))
+    # print(url)
+    # #xnatSession.renew_httpsession()
+    # response = xnatSession.httpsess.get(xnatSession.host + url)
+    #
+    # result = response.json()['ResultSet']['Result']
+    nDicomFiles =dicomfolder_metadata_df.shape[0] # len(result)
     if nDicomFiles == 0:
         raise Exception("No DICOM files for %s stored in XNAT" % scanId)
 
     #     # Get 70% file and ensure it exists
-    selDicomAbs = result[get_slice_idx(nDicomFiles)]['absolutePath']
+    selDicomAbs =dicomfolder_metadata_df.loc[get_slice_idx(nDicomFiles),'URI'] #result[get_slice_idx(nDicomFiles)]['absolutePath']
     print(selDicomAbs)
     #     # selDicomAbs_split=selDicomAbs.split('/')
     #     # print(selDicomAbs_split[-5]+'_'+selDicomAbs_split[-3])
