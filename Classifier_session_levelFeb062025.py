@@ -145,7 +145,7 @@ def get_dicom_using_xnat(sessionId, scanId,xnatSession):
     #     #################################################################
     sessionDir='/DICOMFILEDIR'
 
-    selDicomAbs = result[get_slice_idx(nDicomFiles)]['absolutePath']
+    selDicomAbs =dicomfolder_metadata_df.loc[get_slice_idx(nDicomFiles),'URI']  # result[get_slice_idx(nDicomFiles)]['absolutePath']
     # #/ZIPFILEDIR/BJH_011_13102019_0715/*/*/*/*/**
     selDicom=os.path.join(sessionDir,os.path.basename(selDicomAbs))
     print(selDicom)
