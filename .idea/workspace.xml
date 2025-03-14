@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ad48966-0400-4eb0-b5b5-733bf7ded71f" name="Changes" comment="Commit 2">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2_6_25,_2_47 PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2_6_25__2_47PM__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classifier_session_levelFeb062025.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classifier_session_levelFeb062025.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,46 +130,6 @@
       <option name="presentableId" value="LOCAL-00010" />
       <option name="project" value="LOCAL" />
       <updated>1676058661074</updated>
-    </task>
-    <task id="LOCAL-00093" summary="Commit 2">
-      <option name="closed" value="true" />
-      <created>1690495309266</created>
-      <option name="number" value="00093" />
-      <option name="presentableId" value="LOCAL-00093" />
-      <option name="project" value="LOCAL" />
-      <updated>1690495309266</updated>
-    </task>
-    <task id="LOCAL-00094" summary="Commit 2">
-      <option name="closed" value="true" />
-      <created>1692906687740</created>
-      <option name="number" value="00094" />
-      <option name="presentableId" value="LOCAL-00094" />
-      <option name="project" value="LOCAL" />
-      <updated>1692906687740</updated>
-    </task>
-    <task id="LOCAL-00095" summary="Commit 2">
-      <option name="closed" value="true" />
-      <created>1692906738466</created>
-      <option name="number" value="00095" />
-      <option name="presentableId" value="LOCAL-00095" />
-      <option name="project" value="LOCAL" />
-      <updated>1692906738466</updated>
-    </task>
-    <task id="LOCAL-00096" summary="Commit 2">
-      <option name="closed" value="true" />
-      <created>1692913761383</created>
-      <option name="number" value="00096" />
-      <option name="presentableId" value="LOCAL-00096" />
-      <option name="project" value="LOCAL" />
-      <updated>1692913761383</updated>
-    </task>
-    <task id="LOCAL-00097" summary="Commit 2">
-      <option name="closed" value="true" />
-      <created>1692913989257</created>
-      <option name="number" value="00097" />
-      <option name="presentableId" value="LOCAL-00097" />
-      <option name="project" value="LOCAL" />
-      <updated>1692913989257</updated>
     </task>
     <task id="LOCAL-00098" summary="Commit 2">
       <option name="closed" value="true" />
@@ -445,23 +403,52 @@
       <option name="project" value="LOCAL" />
       <updated>1738886633677</updated>
     </task>
-    <option name="localTasksCounter" value="132" />
+    <task id="LOCAL-00132" summary="Commit 2">
+      <option name="closed" value="true" />
+      <created>1741974308869</created>
+      <option name="number" value="00132" />
+      <option name="presentableId" value="LOCAL-00132" />
+      <option name="project" value="LOCAL" />
+      <updated>1741974308869</updated>
+    </task>
+    <task id="LOCAL-00133" summary="Commit 2">
+      <option name="closed" value="true" />
+      <created>1741974819570</created>
+      <option name="number" value="00133" />
+      <option name="presentableId" value="LOCAL-00133" />
+      <option name="project" value="LOCAL" />
+      <updated>1741974819570</updated>
+    </task>
+    <task id="LOCAL-00134" summary="Commit 2">
+      <option name="closed" value="true" />
+      <created>1741974853952</created>
+      <option name="number" value="00134" />
+      <option name="presentableId" value="LOCAL-00134" />
+      <option name="project" value="LOCAL" />
+      <updated>1741974853952</updated>
+    </task>
+    <task id="LOCAL-00135" summary="Commit 2">
+      <option name="closed" value="true" />
+      <created>1741974930884</created>
+      <option name="number" value="00135" />
+      <option name="presentableId" value="LOCAL-00135" />
+      <option name="project" value="LOCAL" />
+      <updated>1741974930884</updated>
+    </task>
+    <task id="LOCAL-00136" summary="Commit 2">
+      <option name="closed" value="true" />
+      <created>1741975022614</created>
+      <option name="number" value="00136" />
+      <option name="presentableId" value="LOCAL-00136" />
+      <option name="project" value="LOCAL" />
+      <updated>1741975022614</updated>
+    </task>
+    <option name="localTasksCounter" value="137" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Commit 1" />
     <MESSAGE value="Commit 2" />
     <option name="LAST_COMMIT_MESSAGE" value="Commit 2" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Classifier_session_levelFeb062025.py</url>
-          <line>2</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
