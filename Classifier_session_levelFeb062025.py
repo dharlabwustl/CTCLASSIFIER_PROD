@@ -171,6 +171,7 @@ def run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession):
     #     (sessionId, scanId, label))
     url = ("/data/experiments/%s/scans/%s?xsiType=xnat:ctScanData&type=%s" % (sessionId, scanId, label))
     # #xnatSession.renew_httpsession()
+    print(xnatSession.httpsess.get(xnatSession.host + url))
     response = xnatSession.httpsess.put(xnatSession.host + url)
     if response.status_code == 200 or response.status_code == 201:
         print("Successfully set type for %s scan %s to '%s'" % (sessionId, scanId, label))
