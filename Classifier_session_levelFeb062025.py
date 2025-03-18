@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import urllib
+import urllib.parse
 import os, sys, errno, shutil, uuid
 import math,json
 import glob
