@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import urllib.parse
+
 import os, sys, errno, shutil, uuid
 import math,json
 import glob
@@ -170,10 +170,19 @@ def run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession):
     # url = ("/data/experiments/%s/scans/%s?xsiType=xnat:mrScanData&xnat:imageScanData/series_class=%s" %
     #     (sessionId, scanId, label))
     # url = ("/data/experiments/%s/scans/%s?xsiType=xnat:ctScanData&type=%s" % (sessionId, scanId, label))
-    encoded_label = urllib.parse.quote(label, safe='')
-    url =f"/data/experiments/{sessionId}/scans/{scanId}?xsiType=xnat:ctScanData&type={encoded_label}"
+    headers = {
+        'Content-Type': 'application/json; charset=utf-8'
+    }
+
+
+
+    url =f"/data/experiments/{sessionId}/scans/{scanId}?xsiType=xnat:ctScanData&type={label}"
+    response = xnatSession.httpsess.put(
+        xnatSession.host + url,
+        headers=headers
+    )
     # #xnatSession.renew_httpsession()
-    response = xnatSession.httpsess.put(xnatSession.host + url)
+    # response = xnatSession.httpsess.put(xnatSession.host + url)
     if response.status_code == 200 or response.status_code == 201:
         print("Successfully set type for %s scan %s to '%s'" % (sessionId, scanId, label))
         # session_id=session_name=sessionId
