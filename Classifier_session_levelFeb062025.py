@@ -164,7 +164,7 @@ def run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession):
     selDicomDecompr = os.path.join(rawDir, os.path.basename(selDicom))
     DecompressDCM.decompress(selDicom, selDicomDecompr)
     # Classify it
-    # label = label_probability.classify(selDicomDecompr, jpgDir, scanId, nDicomFiles)
+    label = label_probability.classify(selDicomDecompr, jpgDir, scanId, nDicomFiles)
     # print("Scan classification for %s scan %s is '%s'" % (sessionId, scanId, label))
     # # Change value of series_class in XNAT
     # # url = ("/data/experiments/%s/scans/%s?xsiType=xnat:mrScanData&xnat:imageScanData/series_class=%s" %
