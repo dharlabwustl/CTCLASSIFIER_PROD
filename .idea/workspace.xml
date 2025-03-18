@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ad48966-0400-4eb0-b5b5-733bf7ded71f" name="Changes" comment="Commit 2">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Classifier_session_levelFeb062025.py" beforeDir="false" afterPath="$PROJECT_DIR$/Classifier_session_levelFeb062025.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -131,22 +130,6 @@
       <option name="presentableId" value="LOCAL-00010" />
       <option name="project" value="LOCAL" />
       <updated>1676058661074</updated>
-    </task>
-    <task id="LOCAL-00123" summary="Commit 2">
-      <option name="closed" value="true" />
-      <created>1738876821441</created>
-      <option name="number" value="00123" />
-      <option name="presentableId" value="LOCAL-00123" />
-      <option name="project" value="LOCAL" />
-      <updated>1738876821441</updated>
-    </task>
-    <task id="LOCAL-00124" summary="Commit 2">
-      <option name="closed" value="true" />
-      <created>1738877157347</created>
-      <option name="number" value="00124" />
-      <option name="presentableId" value="LOCAL-00124" />
-      <option name="project" value="LOCAL" />
-      <updated>1738877157347</updated>
     </task>
     <task id="LOCAL-00125" summary="Commit 2">
       <option name="closed" value="true" />
@@ -444,12 +427,39 @@
       <option name="project" value="LOCAL" />
       <updated>1742329745503</updated>
     </task>
-    <option name="localTasksCounter" value="162" />
+    <task id="LOCAL-00162" summary="Commit 2">
+      <option name="closed" value="true" />
+      <created>1742330032832</created>
+      <option name="number" value="00162" />
+      <option name="presentableId" value="LOCAL-00162" />
+      <option name="project" value="LOCAL" />
+      <updated>1742330032832</updated>
+    </task>
+    <task id="LOCAL-00163" summary="Commit 2">
+      <option name="closed" value="true" />
+      <created>1742330095433</created>
+      <option name="number" value="00163" />
+      <option name="presentableId" value="LOCAL-00163" />
+      <option name="project" value="LOCAL" />
+      <updated>1742330095433</updated>
+    </task>
+    <option name="localTasksCounter" value="164" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Commit 1" />
     <MESSAGE value="Commit 2" />
     <option name="LAST_COMMIT_MESSAGE" value="Commit 2" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Classifier_session_levelFeb062025.py</url>
+          <line>175</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
