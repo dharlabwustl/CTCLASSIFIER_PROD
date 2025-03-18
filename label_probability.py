@@ -11,6 +11,12 @@ import warnings
 import pydicom as dicom
 import numpy as np
 
+import unicodedata
+
+def clean_text(text):
+    if isinstance(text, bytes):  # Ensure proper decoding
+        text = text.decode('utf-8', errors='ignore')
+    return unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode('ascii')
 def predictFromPixelData(image, basename, jpgDir):
     # Save as jpg
     jpgFile = os.path.join(jpgDir, basename + ".png")
@@ -101,6 +107,7 @@ def predictFromPixelData(image, basename, jpgDir):
 
 def combineClassifications(ds, labelP,nDicomFiles):
     # extract window width, series description and image type
+    ds.SeriesDescription = clean_text(ds.SeriesDescription).lower()
     try:
         Window_Width=int(re.findall(r'\d+', str(ds.WindowWidth).split(",")[0])[0])
     except (AttributeError, IndexError) as err:
