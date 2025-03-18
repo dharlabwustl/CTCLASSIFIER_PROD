@@ -174,6 +174,7 @@ def run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession):
     # print(xnatSession.httpsess.get(xnatSession.host + url))
     command = f' curl  -u   {XNAT_USER}:{XNAT_PASS}  -X PUT    {XNAT_HOST}{url}'
     subprocess.call(command,shell=True)
+    response=200
     # try:
     #     response = xnatSession.httpsess.put(xnatSession.host + url)
     # except:
