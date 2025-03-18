@@ -157,15 +157,15 @@ def run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession):
     print("Classifying scan %s" % scanId)
     # Select DICOM file for scanId (70% thru the brain)
     selDicom, nDicomFiles = get_dicom_using_xnat(sessionId, scanId,xnatSession) #, sessionDir, xnatSesDir, xnatSession)
-    # # selDicom, nDicomFiles = get_dicom_from_filesystem(sessionId, scanId,xnatSession)
-    # print(selDicom)
-    # print(nDicomFiles)
-    # ####################################################################
-    # selDicomDecompr = os.path.join(rawDir, os.path.basename(selDicom))
-    # DecompressDCM.decompress(selDicom, selDicomDecompr)
-    # # Classify it
-    # label = label_probability.classify(selDicomDecompr, jpgDir, scanId, nDicomFiles)
-    # print("Scan classification for %s scan %s is '%s'" % (sessionId, scanId, label))
+    # selDicom, nDicomFiles = get_dicom_from_filesystem(sessionId, scanId,xnatSession)
+    print(selDicom)
+    print(nDicomFiles)
+    ####################################################################
+    selDicomDecompr = os.path.join(rawDir, os.path.basename(selDicom))
+    DecompressDCM.decompress(selDicom, selDicomDecompr)
+    # Classify it
+    label = label_probability.classify(selDicomDecompr, jpgDir, scanId, nDicomFiles)
+    print("Scan classification for %s scan %s is '%s'" % (sessionId, scanId, label))
     # # Change value of series_class in XNAT
     # # url = ("/data/experiments/%s/scans/%s?xsiType=xnat:mrScanData&xnat:imageScanData/series_class=%s" %
     # #     (sessionId, scanId, label))
