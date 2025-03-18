@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import os, sys, errno, shutil, uuid
+import os, sys, errno, shutil, uuid,unicodedata
 import math,json
 import glob
 import re
@@ -166,23 +166,52 @@ def run_classifier(sessionDir, rawDir, jpgDir, sessionId, scanId, xnatSession):
     # Classify it
     label = label_probability.classify(selDicomDecompr, jpgDir, scanId, nDicomFiles)
     print("Scan classification for %s scan %s is '%s'" % (sessionId, scanId, label))
-    # Change value of series_class in XNAT
-    # url = ("/data/experiments/%s/scans/%s?xsiType=xnat:mrScanData&xnat:imageScanData/series_class=%s" %
-    #     (sessionId, scanId, label))
-    # url = ("/data/experiments/%s/scans/%s?xsiType=xnat:ctScanData&type=%s" % (sessionId, scanId, label))
+    url =f"/data/experiments/{sessionId}/scans/{scanId}?xsiType=xnat:ctScanData&type={label}"
+    get_response = xnatSession.httpsess.get(xnatSession.host + url)
+    get_response.encoding = 'utf-8'  # Ensure UTF-8 encoding
+
+    existing_text = get_response.text
+    print(f"Before Normalization: {existing_text}")
+
+    # Normalize existing text to remove encoding issues
+    normalized_text = unicodedata.normalize('NFKD', existing_text).encode('ascii', 'ignore').decode('ascii')
+
+    print(f"After Normalization: {normalized_text}")
+
+    # Prepare payload
+    payload = {"type": label}
+    json_payload = json.dumps(payload, ensure_ascii=False).encode('utf-8')
+
     headers = {
         'Content-Type': 'application/json; charset=utf-8'
     }
 
+    # Send PUT request with corrected encoding
+    response = xnatSession.httpsess.put(xnatSession.host + url, headers=headers, data=json_payload)
+
+    # Decode response correctly
+    response_text = response.content.decode('utf-8', errors='ignore')
+
+    print(response.status_code, response_text)  # Ensure response is valid
 
 
-    url =f"/data/experiments/{sessionId}/scans/{scanId}?xsiType=xnat:ctScanData&type={label}"
-    response = xnatSession.httpsess.put(
-        xnatSession.host + url,
-        headers=headers
-    )
-    # #xnatSession.renew_httpsession()
-    # response = xnatSession.httpsess.put(xnatSession.host + url)
+    # Change value of series_class in XNAT
+    # url = ("/data/experiments/%s/scans/%s?xsiType=xnat:mrScanData&xnat:imageScanData/series_class=%s" %
+    #     (sessionId, scanId, label))
+    # url = ("/data/experiments/%s/scans/%s?xsiType=xnat:ctScanData&type=%s" % (sessionId, scanId, label))
+    # headers = {
+    #     'Content-Type': 'application/json; charset=utf-8'
+    # }
+    #
+    #
+    #
+    # url =f"/data/experiments/{sessionId}/scans/{scanId}?xsiType=xnat:ctScanData&type={label}"
+    # response = xnatSession.httpsess.put(
+    #     xnatSession.host + url,
+    #     headers=headers
+    # )
+    # # #xnatSession.renew_httpsession()
+    # # response = xnatSession.httpsess.put(xnatSession.host + url)
     if response.status_code == 200 or response.status_code == 201:
         print("Successfully set type for %s scan %s to '%s'" % (sessionId, scanId, label))
         # session_id=session_name=sessionId
