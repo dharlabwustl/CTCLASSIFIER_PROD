@@ -1,6 +1,8 @@
 If you have access to [SNIPR](https://snipr.wustl.edu/), you may use this repository to label the CT scans in a session if they are axial image or not.
 Inside the SNIPR you would need to select a session and run the command 
-## ct_scan_classifier_usinggithub
+## ct_scan_classifier_usinggithub.
+
+Following is an example how this step can be run in a local computer.
 # 1) Set the Docker image name
 dockerimagename=hosseinclassifier1_prod
 
